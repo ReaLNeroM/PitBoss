@@ -1,0 +1,32 @@
+.food-request-form, .loading, .requests {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+html, body, .container {
+    height: 100%;
+}
+
+#request-time {
+    margin-right: 1rem;
+}
+
+#submit-button {
+    text-align: right;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.loading {
+  text-align: center;
+}
+
+body {
+  background: url("https://www.rochester.edu/largepics/friday26aug16/8-17-16_Chang_Ye_1_RushRhees_night.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

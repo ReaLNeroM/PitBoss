@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PitBoss</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#">PitBoss</a>
+                <div class="navbar-text">
+                    Be a boss and deliver food for students in quarantine! (UR only)
+                </div>
+            </nav>
+            <main>
+                <form class="food-request-form">
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">First and Last Name</span>
+                        </div>
+                        <input type="text" class="form-control" id="fullName" name="fullName">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Dorm + Room #</span>
+                        </div>
+                        <input type="text" class="form-control" id="dormAndRoom" name="dormAndRoom">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">GrubHub Station</span>
+                        </div>
+                        <select class="custom-select" id="station" name="station">
+                            <option disabled selected value> -- select an option -- </option>
+                            <option value="pit">Pit</option>
+                            <option value="starbucks">Starbucks</option>
+                            <option value="grabngo">Late Night Grab N Go</option>
+                        </select>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Order Number(s)</span>
+                        </div>
+                        <input type="text" class="form-control" id="order" name="order">
+                    </div>
+                    <button id="submit-button" class="btn pull-right btn-primary">Submit request</button>
+                </form>
+                <div class="requests">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center mb-2">
+                            Starbucks
+
+                            <div class="d-flex align-items-center float-right">
+                                <div id="request-time">
+                                    Order sent 15 minutes ago
+                                </div>
+                                <button type="button" class="float-right btn btn-secondary">Deliver!</button>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center mb-2">
+                            Pit
+
+                            <div class="d-flex align-items-center float-right">
+                                <div id="request-time">
+                                    Order sent 10 minutes ago
+                                </div>
+                                <button type="button" class="float-right btn btn-secondary">Deliver!</button>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center mb-2">
+                            Late Night Grab N' Go
+
+                            <div class="d-flex align-items-center float-right">
+                                <div id="request-time">
+                                    Order sent 2 minutes ago
+                                </div>
+                                <button type="button" class="float-right btn btn-secondary">Deliver!</button>
+                            </div>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script src="client.js"></script>
+    </body>
+</html>
