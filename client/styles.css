@@ -1,6 +1,7 @@
 .food-request-form, .loading, .requests {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    overflow: auto;
 }
 
 html, body, .container {
