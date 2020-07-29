@@ -1,19 +1,16 @@
-.food-request-form, .loading, .requests {
+#food-request-form, .loading, .requests {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    overflow: auto;
+    overflow: hidden;
 }
 
 html, body, .container {
     height: 100%;
 }
 
+
 #request-time {
     margin-right: 1rem;
-}
-
-#submit-button {
-    text-align: right;
 }
 
 .container {
