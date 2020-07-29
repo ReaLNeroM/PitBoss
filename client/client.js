@@ -6,16 +6,16 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
 
-    const fullName = formData.get('fullName');
-    const dormAndRoom = formData.get('dormAndRoom');
-    const station = formData.get('station');
-    const order = formData.get('order');
+    const fullName = formData.get('full-name');
+    const dormAndRoom = formData.get('dorm-and-room');
+    const foodStation = formData.get('food-station');
+    const foodOrder = formData.get('food-order');
 
     const request = {
         fullName,
         dormAndRoom,
-        station,
-        order
+        foodStation,
+        foodOrder
     };
 
     fetch(API_URL, {

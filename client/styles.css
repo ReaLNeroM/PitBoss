@@ -1,13 +1,11 @@
 #food-request-form, .loading, .requests {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    overflow: hidden;
 }
 
 html, body, .container {
     height: 100%;
 }
-
 
 #request-time {
     margin-right: 1rem;
