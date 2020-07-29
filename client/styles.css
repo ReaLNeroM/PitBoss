@@ -3,10 +3,6 @@
     margin-bottom: 1rem;
 }
 
-html, body, .container {
-    height: 100%;
-}
-
 #request-time {
     margin-right: 1rem;
 }
