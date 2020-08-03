@@ -1,7 +1,7 @@
 const form = document.querySelector('form');
 const requestsList = document.getElementById('requests-list');
 const loadElement = document.getElementById('load-requests');
-const API_URL = process.env.API_URL || "http://localhost:6969";
+const API_URL = "https://pitboss-vlad.herokuapp.com";
 const API_POST_URL = `${API_URL}/create_request`;
 const API_GET_URL = `${API_URL}/requests`;
 
