@@ -48,7 +48,7 @@ class App extends Component {
     render() {
       return (
         <div id="App" className="container">
-            <Router>
+            <Router basename="realnerom.github.io/PitBoss/pitboss-client">
                 <div id="navBar">
                     <NavBar
                         title="PitBoss"
