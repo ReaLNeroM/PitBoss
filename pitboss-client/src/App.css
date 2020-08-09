@@ -1,0 +1,29 @@
+#App {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+#navBar {
+  margin-bottom: 1rem;
+}
+
+#deliveryForm {
+  padding-bottom: 1rem;
+}
+
+body {
+  background: url("https://www.rochester.edu/largepics/friday26aug16/8-17-16_Chang_Ye_1_RushRhees_night.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
