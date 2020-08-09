@@ -48,7 +48,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(process.env.PUBLIC_URL);
       return (
         <div id="App" className="container">
             <Router basename={process.env.PUBLIC_URL}
@@ -58,13 +57,11 @@ class App extends Component {
                         title="PitBoss"
                         description="Help out and deliver food for students in quarantine! (UR only)" />
                 </div>
-                <Redirect from="/" to="/all-requests" />
                 <Route
                     path="/all-requests"
                     render={() =>
                         <RequestsPanel
-                            requests={this.state.requests}
-                            haveRequestsLoaded={this.state.haveRequestsLoaded} />}
+                            apiUrl={process.env.API_URL || "http://localhost:6969"} />}
                     exact />
                 <Route
                     path="/ask-for-delivery"
