@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   HashRouter as Router,
   Route,
-  Redirect
+  Switch
 } from "react-router-dom";
 
 class App extends Component {
@@ -57,35 +57,43 @@ class App extends Component {
                         title="PitBoss"
                         description="Help out and deliver food for students in quarantine! (UR only)" />
                 </div>
-                <Route
-                    path="/all-requests"
-                    render={() =>
-                        <RequestsPanel
-                            apiUrl={process.env.API_URL || "http://localhost:6969"} />}
-                    exact />
-                <Route
-                    path="/ask-for-delivery"
-                    render={() =>
-                    <div id="deliveryForm">
-                        <FoodDeliveryForm
-                            onFullNameChange={this.fullNameChanged.bind(this)}
-                            fullName={this.state.fullName}
-                            onDormAndRoomChange={this.dormAndRoomChanged.bind(this)}
-                            dormAndRoom={this.state.dormAndRoom}
-                            onFoodStationChange={this.foodStationChanged.bind(this)}
-                            foodStation={this.state.foodStation}
-                            onOrderNumberChange={this.orderNumberChanged.bind(this)}
-                            orderNumber={this.state.orderNumber} />
-                    </div>}
-                    exact />
-                <Route
-                    path="/my-deliveries"
-                    render={() =>
-                    <div id="myDeliveriesPanel">
-                        <MyDeliveriesPanel
-                            haveMyDeliveriesLoaded={this.state.myDeliveriesLoaded} />
-                    </div>}
-                    exact />
+                <Switch>
+                    <Route
+                        path="/"
+                        render={() =>
+                            <RequestsPanel
+                                apiUrl={process.env.API_URL} />}
+                        exact />
+                    <Route
+                        path="/all-requests"
+                        render={() =>
+                            <RequestsPanel
+                                apiUrl={process.env.API_URL} />}
+                        exact />
+                    <Route
+                        path="/ask-for-delivery"
+                        render={() =>
+                        <div id="deliveryForm">
+                            <FoodDeliveryForm
+                                onFullNameChange={this.fullNameChanged.bind(this)}
+                                fullName={this.state.fullName}
+                                onDormAndRoomChange={this.dormAndRoomChanged.bind(this)}
+                                dormAndRoom={this.state.dormAndRoom}
+                                onFoodStationChange={this.foodStationChanged.bind(this)}
+                                foodStation={this.state.foodStation}
+                                onOrderNumberChange={this.orderNumberChanged.bind(this)}
+                                orderNumber={this.state.orderNumber} />
+                        </div>}
+                        exact />
+                    <Route
+                        path="/my-deliveries"
+                        render={() =>
+                        <div id="myDeliveriesPanel">
+                            <MyDeliveriesPanel
+                                haveMyDeliveriesLoaded={this.state.myDeliveriesLoaded} />
+                        </div>}
+                        exact />
+                </Switch>
             </Router>
         </div>
       );
