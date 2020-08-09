@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/PitBoss/precache-manifest.e92e00d3fe22c7212610d9fb4a76b412.js"
+  "/PitBoss/precache-manifest.b3ffb23745839a2928e8f9e321df6413.js"
 );
 
 self.addEventListener('message', (event) => {
