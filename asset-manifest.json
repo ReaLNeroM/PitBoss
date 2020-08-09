@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/PitBoss/static/css/main.25f870bc.chunk.css",
-    "main.js": "/PitBoss/static/js/main.3b6654c0.chunk.js",
-    "main.js.map": "/PitBoss/static/js/main.3b6654c0.chunk.js.map",
+    "main.js": "/PitBoss/static/js/main.e0f610bb.chunk.js",
+    "main.js.map": "/PitBoss/static/js/main.e0f610bb.chunk.js.map",
     "runtime-main.js": "/PitBoss/static/js/runtime-main.550505b4.js",
     "runtime-main.js.map": "/PitBoss/static/js/runtime-main.550505b4.js.map",
     "static/css/2.11829350.chunk.css": "/PitBoss/static/css/2.11829350.chunk.css",
     "static/js/2.85e55e0a.chunk.js": "/PitBoss/static/js/2.85e55e0a.chunk.js",
     "static/js/2.85e55e0a.chunk.js.map": "/PitBoss/static/js/2.85e55e0a.chunk.js.map",
     "index.html": "/PitBoss/index.html",
-    "precache-manifest.31f94dfa2c7ab38f070ebf254268ecec.js": "/PitBoss/precache-manifest.31f94dfa2c7ab38f070ebf254268ecec.js",
+    "precache-manifest.c74ff7836fff7089545d3c6247118567.js": "/PitBoss/precache-manifest.c74ff7836fff7089545d3c6247118567.js",
     "service-worker.js": "/PitBoss/service-worker.js",
     "static/css/2.11829350.chunk.css.map": "/PitBoss/static/css/2.11829350.chunk.css.map",
     "static/css/main.25f870bc.chunk.css.map": "/PitBoss/static/css/main.25f870bc.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.11829350.chunk.css",
     "static/js/2.85e55e0a.chunk.js",
     "static/css/main.25f870bc.chunk.css",
-    "static/js/main.3b6654c0.chunk.js"
+    "static/js/main.e0f610bb.chunk.js"
   ]
 }
