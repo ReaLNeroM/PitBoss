@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/PitBoss/pitboss-client/build/static/css/main.70cc8e9b.chunk.css",
-    "main.js": "/PitBoss/pitboss-client/build/static/js/main.2c75ac9d.chunk.js",
-    "main.js.map": "/PitBoss/pitboss-client/build/static/js/main.2c75ac9d.chunk.js.map",
-    "runtime-main.js": "/PitBoss/pitboss-client/build/static/js/runtime-main.c0f12c31.js",
-    "runtime-main.js.map": "/PitBoss/pitboss-client/build/static/js/runtime-main.c0f12c31.js.map",
-    "static/css/2.11829350.chunk.css": "/PitBoss/pitboss-client/build/static/css/2.11829350.chunk.css",
-    "static/js/2.9182ac74.chunk.js": "/PitBoss/pitboss-client/build/static/js/2.9182ac74.chunk.js",
-    "static/js/2.9182ac74.chunk.js.map": "/PitBoss/pitboss-client/build/static/js/2.9182ac74.chunk.js.map",
-    "index.html": "/PitBoss/pitboss-client/build/index.html",
-    "precache-manifest.2c440811da30ed1354b01a992047e925.js": "/PitBoss/pitboss-client/build/precache-manifest.2c440811da30ed1354b01a992047e925.js",
-    "service-worker.js": "/PitBoss/pitboss-client/build/service-worker.js",
-    "static/css/2.11829350.chunk.css.map": "/PitBoss/pitboss-client/build/static/css/2.11829350.chunk.css.map",
-    "static/css/main.70cc8e9b.chunk.css.map": "/PitBoss/pitboss-client/build/static/css/main.70cc8e9b.chunk.css.map",
-    "static/js/2.9182ac74.chunk.js.LICENSE.txt": "/PitBoss/pitboss-client/build/static/js/2.9182ac74.chunk.js.LICENSE.txt"
+    "main.css": "/PitBoss/pitboss-client/static/css/main.70cc8e9b.chunk.css",
+    "main.js": "/PitBoss/pitboss-client/static/js/main.de797104.chunk.js",
+    "main.js.map": "/PitBoss/pitboss-client/static/js/main.de797104.chunk.js.map",
+    "runtime-main.js": "/PitBoss/pitboss-client/static/js/runtime-main.2faf9151.js",
+    "runtime-main.js.map": "/PitBoss/pitboss-client/static/js/runtime-main.2faf9151.js.map",
+    "static/css/2.11829350.chunk.css": "/PitBoss/pitboss-client/static/css/2.11829350.chunk.css",
+    "static/js/2.9182ac74.chunk.js": "/PitBoss/pitboss-client/static/js/2.9182ac74.chunk.js",
+    "static/js/2.9182ac74.chunk.js.map": "/PitBoss/pitboss-client/static/js/2.9182ac74.chunk.js.map",
+    "index.html": "/PitBoss/pitboss-client/index.html",
+    "precache-manifest.870522506f8e1b8f6cb6592aaa6e5350.js": "/PitBoss/pitboss-client/precache-manifest.870522506f8e1b8f6cb6592aaa6e5350.js",
+    "service-worker.js": "/PitBoss/pitboss-client/service-worker.js",
+    "static/css/2.11829350.chunk.css.map": "/PitBoss/pitboss-client/static/css/2.11829350.chunk.css.map",
+    "static/css/main.70cc8e9b.chunk.css.map": "/PitBoss/pitboss-client/static/css/main.70cc8e9b.chunk.css.map",
+    "static/js/2.9182ac74.chunk.js.LICENSE.txt": "/PitBoss/pitboss-client/static/js/2.9182ac74.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c0f12c31.js",
+    "static/js/runtime-main.2faf9151.js",
     "static/css/2.11829350.chunk.css",
     "static/js/2.9182ac74.chunk.js",
     "static/css/main.70cc8e9b.chunk.css",
-    "static/js/main.2c75ac9d.chunk.js"
+    "static/js/main.de797104.chunk.js"
   ]
 }
