@@ -48,7 +48,7 @@ class App extends Component {
     render() {
       return (
         <div id="App" className="container">
-            <Router basename="realnerom.github.io/PitBoss/pitboss-client">
+            <Router basename={process.env.PUBLIC_URL}>
                 <div id="navBar">
                     <NavBar
                         title="PitBoss"
