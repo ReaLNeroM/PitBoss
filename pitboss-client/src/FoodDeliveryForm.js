@@ -59,7 +59,7 @@ const FoodDeliveryForm = (props) => {
 
             <button type="submit"
                     id="submitButton"
-                    className="btn btn-primary">Send pick-up request</button>
+                    className="btn btn-primary float-right">Send pick-up request</button>
         </form>
     );
 }

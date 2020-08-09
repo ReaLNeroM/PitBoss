@@ -18,6 +18,7 @@ class App extends Component {
         this.state = {
             requests: [],
             haveRequestsLoaded: false,
+            haveMyDeliveriesLoaded: false,
             fullName: '',
             dormAndRoom: '',
             foodStation: FoodStation.None,
@@ -82,7 +83,11 @@ class App extends Component {
                     exact />
                 <Route
                     path="/my-deliveries"
-                    render={MyDeliveriesPanel}
+                    render={() =>
+                    <div id="myDeliveriesPanel">
+                        <MyDeliveriesPanel
+                            haveMyDeliveriesLoaded={this.state.myDeliveriesLoaded} />
+                    </div>}
                     exact />
             </Router>
         </div>

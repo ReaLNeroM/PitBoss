@@ -7,7 +7,7 @@ const NavBar = (props) => {
     const {title, description} = props;
     return (
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand to="all-requests">{title}</Navbar.Brand>
+          <Navbar.Brand as={Link} to="all-requests">{title}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">

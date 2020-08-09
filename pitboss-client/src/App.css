@@ -18,6 +18,7 @@
 
 #deliveryForm {
   padding-bottom: 1rem;
+  overflow: hidden;
 }
 
 body {
