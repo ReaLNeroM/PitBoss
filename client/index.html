@@ -11,13 +11,35 @@
     </head>
     <body>
         <div class="container">
-            <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="#">PitBoss</a>
-                <div class="navbar-text">
-                    Be a boss and deliver food for students in quarantine! (UR only)
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">
+                    PitBoss
+                    <small class="text-muted">UR only</small>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Deliver! <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ask for delivery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">My deliveries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Register</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
             <main>
+                <h4 style="padding-top: 1rem; padding-left: 1rem; padding-right: 1rem; background-color: rgba(255, 255, 255, 0.3)">
+                  Volunteer to deliver for students in quarantine!
+                </h4>
                 <form id="food-request-form">
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -61,9 +83,7 @@
                             <div id="load-requests" class="loading-gif">
                                 <img src="loading.gif" alt="">
                             </div>
-
                             <ul id="requests-list" class="list-group">
-
                             </ul>
                         </div>
                         <div class="tab-pane fade" id="my-deliveries" role="tabpanel" aria-labelledby="my-deliveries-tab">
