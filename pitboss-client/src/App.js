@@ -7,8 +7,9 @@ import FoodStation from './FoodStation';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
+  Redirect
 } from "react-router-dom";
 
 class App extends Component {
@@ -46,30 +47,17 @@ class App extends Component {
     }
 
     render() {
+        console.log(process.env.PUBLIC_URL);
       return (
         <div id="App" className="container">
-            <Router basename={process.env.PUBLIC_URL}>
+            <Router basename={process.env.PUBLIC_URL}
+                    hashType="noslash">
                 <div id="navBar">
                     <NavBar
                         title="PitBoss"
                         description="Help out and deliver food for students in quarantine! (UR only)" />
                 </div>
-                <Route
-                    path="/"
-                    render={() =>
-                    <div id="deliveryForm">
-                        <FoodDeliveryForm
-                            id="deliveryForm"
-                            onFullNameChange={this.fullNameChanged.bind(this)}
-                            fullName={this.state.fullName}
-                            onDormAndRoomChange={this.dormAndRoomChanged.bind(this)}
-                            dormAndRoom={this.state.dormAndRoom}
-                            onFoodStationChange={this.foodStationChanged.bind(this)}
-                            foodStation={this.state.foodStation}
-                            onOrderNumberChange={this.orderNumberChanged.bind(this)}
-                            orderNumber={this.state.orderNumber} />
-                    </div>}
-                    exact />
+                <Redirect from="/" to="/all-requests" />
                 <Route
                     path="/all-requests"
                     render={() =>
