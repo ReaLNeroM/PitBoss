@@ -12,7 +12,7 @@ const NavBar = (props) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="all-requests">Deliver!</Nav.Link>
-              <Nav.Link as={Link} to="ask-for-delivery">Ask for delivery!</Nav.Link>
+              <Nav.Link as={Link} to="ask-for-delivery">Ask for delivery</Nav.Link>
               <Nav.Link as={Link} to="my-deliveries">My deliveries</Nav.Link>
             </Nav>
           </Navbar.Collapse>

@@ -48,7 +48,7 @@ class RequestsPanel extends React.Component {
             <div id="requests">
                 <div id="load-requests"
                      style={haveRequestsLoaded ? {display: 'none'} : {}}>
-                    <img src="loading.gif" alt="Loading..." />
+                    <img src={process.env.PUBLIC_URL + "/loading.gif"} alt="Loading..." />
                 </div>
                 <ul id="requests-list"
                     className="list-group"

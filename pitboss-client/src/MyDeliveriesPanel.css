@@ -1,7 +1,7 @@
 #load-my-deliveries {
-    text-align: center;
+  text-align: center;
 }
 
-.errorAlert {
-    padding-bottom: 0rem;
+#error-my-deliveries {
+  margin-bottom: 0rem !important;
 }

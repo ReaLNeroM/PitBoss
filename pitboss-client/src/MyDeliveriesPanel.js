@@ -45,7 +45,7 @@ class MyDeliveriesPanel extends React.Component {
             <div id="my-deliveries">
                 <div id="load-my-deliveries"
                      style={haveMyDeliveriesLoaded ? {display: 'none'} : {}}>
-                    <img src="loading.gif" alt="Loading..." />
+                    <img src={process.env.PUBLIC_URL + "/loading.gif"} alt="Loading..." />
                 </div>
                 <div id="error-my-deliveries"
                      className="alert alert-danger"

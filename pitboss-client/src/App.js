@@ -26,27 +26,6 @@ class App extends Component {
         };
     }
 
-    fullNameChanged(event) {
-        this.setState({
-            fullName: event.target.value
-        });
-    }
-    dormAndRoomChanged(event) {
-        this.setState({
-            dormAndRoom: event.target.value
-        });
-    }
-    foodStationChanged(event) {
-        this.setState({
-            foodStation: event.target.value
-        })
-    }
-    orderNumberChanged(event) {
-        this.setState({
-            orderNumber: event.target.value
-        });
-    }
-
     render() {
       return (
         <div id="App" className="container">
@@ -61,37 +40,29 @@ class App extends Component {
                     <Route
                         path="/"
                         render={() =>
-                            <RequestsPanel
-                                apiUrl={process.env.API_URL} />}
-                        exact />
+                                <RequestsPanel
+                                    apiUrl={process.env.REACT_APP_API_URL} />}
+                            exact />
                     <Route
                         path="/all-requests"
                         render={() =>
-                            <RequestsPanel
-                                apiUrl={process.env.API_URL} />}
-                        exact />
+                                <RequestsPanel
+                                    apiUrl={process.env.REACT_APP_API_URL} />}
+                            exact />
                     <Route
                         path="/ask-for-delivery"
                         render={() =>
-                        <div id="deliveryForm">
-                            <FoodDeliveryForm
-                                onFullNameChange={this.fullNameChanged.bind(this)}
-                                fullName={this.state.fullName}
-                                onDormAndRoomChange={this.dormAndRoomChanged.bind(this)}
-                                dormAndRoom={this.state.dormAndRoom}
-                                onFoodStationChange={this.foodStationChanged.bind(this)}
-                                foodStation={this.state.foodStation}
-                                onOrderNumberChange={this.orderNumberChanged.bind(this)}
-                                orderNumber={this.state.orderNumber} />
-                        </div>}
+                            <div id="deliveryForm">
+                                <FoodDeliveryForm />
+                            </div>}
                         exact />
                     <Route
                         path="/my-deliveries"
                         render={() =>
-                        <div id="myDeliveriesPanel">
-                            <MyDeliveriesPanel
-                                haveMyDeliveriesLoaded={this.state.myDeliveriesLoaded} />
-                        </div>}
+                            <div id="myDeliveriesPanel">
+                                <MyDeliveriesPanel
+                                    haveMyDeliveriesLoaded={this.state.myDeliveriesLoaded} />
+                            </div>}
                         exact />
                 </Switch>
             </Router>

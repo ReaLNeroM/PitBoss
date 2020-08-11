@@ -8,7 +8,7 @@ const requests = db.get('requests');
 const app = express();
 const Validator = require('jsonschema').Validator;
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
 function validate_request(json) {
