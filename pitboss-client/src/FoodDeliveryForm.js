@@ -41,51 +41,55 @@ class FoodDeliveryForm extends React.Component {
         const orderNumberChanged = this.orderNumberChanged.bind(this);
 
         return (
+
             <form>
-                <div className="form-row">
-                    <div className="form-group col-md-6">
-                        <label htmlFor="fullName">Full Name</label>
-                        <input type="text"
-                               className="form-control"
-                               onChange={fullNameChanged}
-                               id="fullName"
-                               name="fullName"
-                               placeholder="Name Surname"
-                               value={fullName} />
-                    </div>
-                    <div className="form-group col-md-6">
-                        <label htmlFor="dormAndRoom">Dorm + Room #</label>
-                        <input type="text"
-                               className="form-control"
-                               onChange={dormAndRoomChanged}
-                               id="dormAndRoom"
-                               name="dormAndRoom"
-                               placeholder="Anderson 101"
-                               value={dormAndRoom} />
-                    </div>
+                <div className="form-group">
+                    <input type="text"
+                           className="form-control"
+                           onChange={fullNameChanged}
+                           id="fullName"
+                           name="fullName"
+                           placeholder="Full Name"
+                           value={fullName} />
+                </div>
+                <div className="form-group">
+                    <input type="text"
+                           className="form-control"
+                           onChange={dormAndRoomChanged}
+                           id="dormAndRoom"
+                           name="dormAndRoom"
+                           placeholder="Dorm and Room"
+                           value={dormAndRoom} />
+                </div>
+                <div className="form-group">
+                    <input type="text"
+                           className="form-control"
+                           onChange={dormAndRoomChanged}
+                           id="dormAndRoom"
+                           name="dormAndRoom"
+                           placeholder="email@u.rochester.edu"
+                           value={dormAndRoom} />
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <label htmlFor="foodStation">GrubHub Station</label>
                         <select className="form-control"
                                 onChange={foodStationChanged}
                                 id="foodStation"
                                 name="foodStation"
                                 value={foodStation}>
-                            <option disabled value={FoodStation.None}> -- select an option -- </option>
+                            <option disabled value={FoodStation.None}> GrubHub Station </option>
                             <option value={FoodStation.Pit}>Pit</option>
                             <option value={FoodStation.Starbucks}>Starbucks</option>
                             <option value={FoodStation.GrabNGo}>Grab N' Go</option>
                         </select>
                     </div>
                     <div className="form-group col-md-6">
-                        <label htmlFor="orderNumber">Order Number(s)</label>
                         <input type="text"
                                className="form-control"
                                onChange={orderNumberChanged}
                                id="orderNumber"
                                name="orderNumber"
-                               placeholder="#22, #23"
+                               placeholder="Order Number(s)"
                                value={orderNumber} />
                     </div>
                 </div>
