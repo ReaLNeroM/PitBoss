@@ -3,8 +3,18 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { Link } from 'react-router-dom'
 
-const NavBar = (props) => {
-    const {title, description} = props;
+class NavBar extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {
+        title: props.title,
+        description: props.description,
+        tab: ''
+      };
+  }
+
+  render() {
+    const {title, description, tab} = this.state;
     return (
         <nav className="navbar navbar-expand-lg navbar-dark primary-color">
           <a className="navbar-brand" href="all-requests">PitBoss</a>
@@ -17,18 +27,24 @@ const NavBar = (props) => {
           <div className="collapse navbar-collapse" id="basicExampleNav">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <Nav.Link className="nav-link" as={Link} to="all-requests">Deliver!
-                  <span className="sr-only">(current)</span>
+                <Nav.Link className="nav-link" as={Link} to="all-requests">
+                  Deliver!
+                  {tab === "all-requests" && 
+                    <span className="sr-only">(current)</span>}
                 </Nav.Link>
               </li>
               <li className="nav-item">
                 <Nav.Link className="nav-link" as={Link} to="ask-for-delivery">
-                    Ask for delivery
+                  Ask for delivery
+                  {tab === "ask-for-delivery" && 
+                    <span className="sr-only">(current)</span>}
                </Nav.Link>
               </li>
               <li className="nav-item">
                 <Nav.Link className="nav-link" as={Link} to="my-deliveries">
                     My deliveries
+                    {tab === "my-deliveries" && 
+                      <span className="sr-only">(current)</span>}
                 </Nav.Link>
               </li>
             </ul>
@@ -45,7 +61,8 @@ const NavBar = (props) => {
             </ul>
           </div>
         </nav>
-    )
+    );
+  }
 }
 
 export default NavBar;
