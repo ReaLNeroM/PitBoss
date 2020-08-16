@@ -48,9 +48,9 @@ class MyDeliveriesPanel extends React.Component {
                     <img src={process.env.PUBLIC_URL + "/loading.gif"} alt="Loading..." />
                 </div>
                 <div id="error-my-deliveries"
-                     className="alert alert-danger"
+                     className="alert alert-info"
                      style={error === null ? {display: 'none'}: {}}>
-                     An error has occured. Please try again.
+                     This tab hasn't been implemented yet, please wait ;)
                 </div>
                 <ul id="deliveries-list"
                     className="list-group"

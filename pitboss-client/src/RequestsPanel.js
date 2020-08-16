@@ -32,8 +32,11 @@ class RequestsPanel extends React.Component {
 
     render() {
         const { requests, haveRequestsLoaded } = this.state;
-        const requestsList = requests.map((req) => (
-            <li key={req._id} className="list-group-item d-flex justify-content-between align-items-center mb-2">
+        const requestsLength = requests.length;
+        const requestsList = requests.map((req, index) => (
+            <li
+                key={req._id}
+                className={"list-group-item d-flex justify-content-between align-items-center " + ((index !== requestsLength - 1) ? "mb-2" : "")}>
                {req.foodStation}
                 <div className="d-flex align-items-center float-right">
                     <div style={{marginRight: "1rem"}}>
