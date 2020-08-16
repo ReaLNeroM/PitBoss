@@ -1,9 +1,11 @@
 import React from 'react';
 import './RequestsPanel.css';
 import axios from "axios";
+import ago from "s-ago";
 
 function toLocalDelta(timestamp) {
-    return '15 minutes ago';
+    const time = new Date(Date.parse(timestamp));
+    return ago(time);
 }
 
 class RequestsPanel extends React.Component {
@@ -35,7 +37,7 @@ class RequestsPanel extends React.Component {
                {req.foodStation}
                 <div className="d-flex align-items-center float-right">
                     <div style={{marginRight: "1rem"}}>
-                        {toLocalDelta(req.time)}
+                        {toLocalDelta(req.created)}
                     </div>
                     <button className="float-right btn btn-dark">
                         Deliver!

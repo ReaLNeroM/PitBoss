@@ -3,7 +3,6 @@ import NavBar from './NavBar';
 import FoodDeliveryForm from './FoodDeliveryForm';
 import MyDeliveriesPanel from './MyDeliveriesPanel';
 import RequestsPanel from './RequestsPanel';
-import FoodStation from './FoodStation';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -13,19 +12,6 @@ import {
 } from "react-router-dom";
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            requests: [],
-            haveRequestsLoaded: false,
-            haveMyDeliveriesLoaded: false,
-            fullName: '',
-            dormAndRoom: '',
-            foodStation: FoodStation.None,
-            orderNumber: ''
-        };
-    }
-
     render() {
       return (
         <div id="App" className="container">
@@ -39,10 +25,10 @@ class App extends Component {
                 <Switch>
                     <Route
                         path="/"
-                        render={() =>
-                                <RequestsPanel
-                                    apiUrl={process.env.REACT_APP_API_URL} />}
-                            exact />
+                        exact >
+                        <RequestsPanel
+                                    apiUrl={process.env.REACT_APP_API_URL} />
+                    </Route>
                     <Route
                         path="/all-requests"
                         render={() =>
@@ -53,15 +39,15 @@ class App extends Component {
                         path="/ask-for-delivery"
                         render={() =>
                             <div id="deliveryForm">
-                                <FoodDeliveryForm />
+                                <FoodDeliveryForm
+                                    apiUrl={process.env.REACT_APP_API_URL} />
                             </div>}
                         exact />
                     <Route
                         path="/my-deliveries"
                         render={() =>
                             <div id="myDeliveriesPanel">
-                                <MyDeliveriesPanel
-                                    haveMyDeliveriesLoaded={this.state.myDeliveriesLoaded} />
+                                <MyDeliveriesPanel />
                             </div>}
                         exact />
                 </Switch>

@@ -1,12 +1,33 @@
 import React from 'react';
 import FoodStation from './FoodStation';
+import { withRouter } from 'react-router-dom';
+
+function validateRequest(request){
+    if(request.schemaVersion.trim() === ''){
+        return "Schema version is empty";
+    } else if(request.fullName.trim() === '' || !request.fullName.trim().includes(' ')){
+        return "Please enter full name";
+    } else if(request.dormAndRoom.trim() === ''){
+        return "Please enter dorm and room number";
+    } else if(request.email.trim() === '' || !request.email.includes("@u.rochester.edu")){
+        return "Please enter valid e-mail (must contain @u.rochester.edu)";
+    } else if(request.foodStation === "N/A"){
+        return "Please enter what GrubHub station you ordered from";
+    } else if(request.orderNumber === ''){
+        return "Please enter order number";
+    }
+
+    return "";
+}
 
 class FoodDeliveryForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            apiUrl: props.apiUrl,
             fullName: '',
             dormAndRoom: '',
+            email: '',
             foodStation: FoodStation.None,
             orderNumber: ''
         };
@@ -22,6 +43,11 @@ class FoodDeliveryForm extends React.Component {
             dormAndRoom: event.target.value
         });
     }
+    emailChanged(event) {
+        this.setState({
+            email: event.target.value
+        });
+    }
     foodStationChanged(event) {
         this.setState({
             foodStation: event.target.value
@@ -33,16 +59,52 @@ class FoodDeliveryForm extends React.Component {
         });
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const schemaVersion = "1";
+        const fullName = formData.get("fullName");
+        const dormAndRoom = formData.get("dormAndRoom");
+        const email = formData.get("email");
+        const foodStation = this.state.foodStation; // hack because select's default
+                                                    // value doesn't always work.
+        const orderNumber = formData.get("orderNumber");
+
+        const request = {
+            schemaVersion,
+            fullName,
+            dormAndRoom,
+            email,
+            foodStation,
+            orderNumber
+        };
+        const validationError = validateRequest(request);
+
+        if(validationError === ''){
+            fetch(`${this.state.apiUrl}/create_request`, {
+                method: 'POST',
+                body: JSON.stringify(request),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(this.props.history.push('/all-requests'))
+        } else {
+            alert(`Error: ${validationError}.`);
+        }
+    }
+
     render() {
-        const { fullName, dormAndRoom, foodStation, orderNumber} = this.state;
+        const { fullName, dormAndRoom, email, foodStation, orderNumber} = this.state;
         const fullNameChanged = this.fullNameChanged.bind(this);
         const dormAndRoomChanged = this.dormAndRoomChanged.bind(this);
+        const emailChanged = this.emailChanged.bind(this);
         const foodStationChanged = this.foodStationChanged.bind(this);
         const orderNumberChanged = this.orderNumberChanged.bind(this);
+        const handleSubmit = this.handleSubmit.bind(this)
 
         return (
-
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input type="text"
                            className="form-control"
@@ -64,11 +126,11 @@ class FoodDeliveryForm extends React.Component {
                 <div className="form-group">
                     <input type="text"
                            className="form-control"
-                           onChange={dormAndRoomChanged}
-                           id="dormAndRoom"
-                           name="dormAndRoom"
+                           onChange={emailChanged}
+                           id="email"
+                           name="email"
                            placeholder="email@u.rochester.edu"
-                           value={dormAndRoom} />
+                           value={email} />
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-6">
@@ -102,4 +164,4 @@ class FoodDeliveryForm extends React.Component {
     }
 }
 
-export default FoodDeliveryForm;
+export default withRouter(FoodDeliveryForm);

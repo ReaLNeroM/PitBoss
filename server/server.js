@@ -6,16 +6,18 @@ const db = monk(process.env.MONGO_URI || 'localhost/meower');
 const requests = db.get('requests');
 
 const app = express();
-const Validator = require('jsonschema').Validator;
 
 app.use(cors());
 app.use(express.json());
 
 function validate_request(json) {
-    return json.fullName && json.fullName.toString().trim() !== '' &&
+    console.log(json);
+
+    return json.fullName    && json.fullName   .toString().trim() !== '' &&
            json.dormAndRoom && json.dormAndRoom.toString().trim() !== '' &&
+           json.email       && json.email      .toString().trim() !== '' &&
            json.foodStation && json.foodStation.toString().trim() !== '' &&
-           json.foodOrder && json.foodOrder.toString().trim() !== '';
+           json.orderNumber && json.orderNumber.toString().trim() !== '';
 }
 
 
@@ -34,10 +36,12 @@ app.get('/requests', (req, res) => {
 app.post('/create_request', (req, res) => {
     if(validate_request(req.body)){
         const request = {
+            schemaVersion: req.body.schemaVersion.toString().trim(),
             fullName: req.body.fullName.toString().trim(),
             dormAndRoom: req.body.dormAndRoom.toString().trim(),
+            email: req.body.email.toString().trim(),
             foodStation: req.body.foodStation.toString().trim(),
-            foodOrder: req.body.foodOrder.toString().trim(),
+            orderNumber: req.body.orderNumber.toString().trim(),
             created: new Date()
         };
 
