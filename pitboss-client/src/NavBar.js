@@ -27,7 +27,7 @@ class NavBar extends React.Component {
 
                 <div className="collapse navbar-collapse" id="basicExampleNav">
                     <ul className="navbar-nav mr-auto">
-                        <li className={"nav-item " + (tab === "all-requests" ? "active" : "")}>
+                        <li className={"nav-item " + ((tab === "all-requests" || tab === "") ? "active" : "")}>
                             <Nav.Link className="nav-link" as={Link} href="all-requests" to="all-requests">
                             Deliver!
                             </Nav.Link>
