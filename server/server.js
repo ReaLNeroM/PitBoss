@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const monk = require('monk');
 
-const db = monk(process.env.MONGO_URI || 'localhost/meower');
+const db = monk(process.env.MONGO_URI || 'localhost/pitboss');
 const requests = db.get('requests');
 
 const app = express();
@@ -37,12 +37,12 @@ app.post('/create_request', (req, res) => {
     if(validate_request(req.body)){
         const request = {
             schemaVersion: req.body.schemaVersion.toString().trim(),
-            fullName: req.body.fullName.toString().trim(),
-            dormAndRoom: req.body.dormAndRoom.toString().trim(),
-            email: req.body.email.toString().trim(),
-            foodStation: req.body.foodStation.toString().trim(),
-            orderNumber: req.body.orderNumber.toString().trim(),
-            created: new Date()
+            fullName     : req.body.fullName     .toString().trim(),
+            dormAndRoom  : req.body.dormAndRoom  .toString().trim(),
+            email        : req.body.email        .toString().trim(),
+            foodStation  : req.body.foodStation  .toString().trim(),
+            orderNumber  : req.body.orderNumber  .toString().trim(),
+            created      : new Date()
         };
 
         requests
