@@ -59,11 +59,8 @@ class NavBar extends React.Component {
                             <div
                                 className="dropdown-menu dropdown-menu-right dropdown-info"
                                 aria-labelledby="navbarDropdownMenuLink-4">
-                                <div className="dropdown-item waves-effect waves-light" href="#">
-                                    My account
-                                </div>
-                                <div className="dropdown-item waves-effect waves-light" href="#">
-                                    Log out
+                                <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#exampleModal">
+                                    Register
                                 </div>
                             </div>
                         </li>

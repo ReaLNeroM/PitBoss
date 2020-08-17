@@ -5,16 +5,10 @@ import { withRouter } from 'react-router-dom';
 function validateRequest(request){
     if(request.schemaVersion.trim() === ''){
         return "Schema version is empty";
-    } else if(request.fullName.trim() === '' || !request.fullName.trim().includes(' ')){
+    } else if(!request.fullName.trim().includes(' ')){
         return "Please enter full name";
-    } else if(request.dormAndRoom.trim() === ''){
-        return "Please enter dorm and room number";
-    } else if(request.email.trim() === '' || !request.email.includes("@u.rochester.edu")){
+    } else if(!request.email.includes("@u.rochester.edu")){
         return "Please enter valid e-mail (must contain @u.rochester.edu)";
-    } else if(request.foodStation === "N/A"){
-        return "Please enter what GrubHub station you ordered from";
-    } else if(request.orderNumber === ''){
-        return "Please enter order number";
     }
 
     return "";
@@ -63,7 +57,7 @@ class FoodDeliveryForm extends React.Component {
         event.preventDefault();
         const formData = new FormData(event.target);
 
-        const schemaVersion = "1";
+        const schemaVersion = "request.1";
         const fullName = formData.get("fullName");
         const dormAndRoom = formData.get("dormAndRoom");
         const email = formData.get("email");
@@ -112,7 +106,8 @@ class FoodDeliveryForm extends React.Component {
                            id="fullName"
                            name="fullName"
                            placeholder="Full Name"
-                           value={fullName} />
+                           value={fullName}
+                           required />
                 </div>
                 <div className="form-group">
                     <input type="text"
@@ -121,16 +116,18 @@ class FoodDeliveryForm extends React.Component {
                            id="dormAndRoom"
                            name="dormAndRoom"
                            placeholder="Dorm and Room"
-                           value={dormAndRoom} />
+                           value={dormAndRoom}
+                           required />
                 </div>
                 <div className="form-group">
-                    <input type="text"
+                    <input type="email"
                            className="form-control"
                            onChange={emailChanged}
                            id="email"
                            name="email"
                            placeholder="email@u.rochester.edu"
-                           value={email} />
+                           value={email}
+                           required />
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-6">
@@ -138,7 +135,8 @@ class FoodDeliveryForm extends React.Component {
                                 onChange={foodStationChanged}
                                 id="foodStation"
                                 name="foodStation"
-                                value={foodStation}>
+                                value={foodStation}
+                                required >
                             <option disabled value={FoodStation.None}> GrubHub Station </option>
                             <option value={FoodStation.Pit}>Pit</option>
                             <option value={FoodStation.Starbucks}>Starbucks</option>
@@ -152,7 +150,8 @@ class FoodDeliveryForm extends React.Component {
                                id="orderNumber"
                                name="orderNumber"
                                placeholder="Order Number(s)"
-                               value={orderNumber} />
+                               value={orderNumber}
+                               required />
                     </div>
                 </div>
 

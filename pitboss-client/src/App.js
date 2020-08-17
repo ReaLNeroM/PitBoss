@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import FoodDeliveryForm from './FoodDeliveryForm';
 import MyDeliveriesPanel from './MyDeliveriesPanel';
 import RequestsPanel from './RequestsPanel';
+import RegisterForm from './RegisterForm';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -13,6 +14,8 @@ import {
 
 class App extends Component {
     render() {
+      const apiUrl = process.env.REACT_APP_API_URL;
+
       return (
         <div id="App" className="container">
             <Router basename={process.env.PUBLIC_URL}
@@ -22,25 +25,27 @@ class App extends Component {
                         title="PitBoss"
                         description="Help out and deliver food for students in quarantine! (UR only)" />
                 </div>
+                <RegisterForm
+                    apiUrl={apiUrl} />
                 <Switch>
                     <Route
                         path="/"
                         exact >
                         <RequestsPanel
-                                    apiUrl={process.env.REACT_APP_API_URL} />
+                                    apiUrl={apiUrl} />
                     </Route>
                     <Route
                         path="/all-requests"
                         render={() =>
                                 <RequestsPanel
-                                    apiUrl={process.env.REACT_APP_API_URL} />}
+                                    apiUrl={apiUrl} />}
                             exact />
                     <Route
                         path="/ask-for-delivery"
                         render={() =>
                             <div id="deliveryForm">
                                 <FoodDeliveryForm
-                                    apiUrl={process.env.REACT_APP_API_URL} />
+                                    apiUrl={apiUrl} />
                             </div>}
                         exact />
                     <Route
