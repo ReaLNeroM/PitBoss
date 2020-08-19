@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "dormAndRoom": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string"
+        },
+        "foodStation": {
+            "type": "string"
+        },
+        "fullName": {
+            "type": "string"
+        },
+        "orderNumber": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "dormAndRoom",
+        "email",
+        "foodStation",
+        "fullName",
+        "orderNumber"
+    ],
+    "type": "object"
+}
