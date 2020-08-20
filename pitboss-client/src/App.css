@@ -1,6 +1,7 @@
 #App {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 960px;
 }
 
 .App-header {
@@ -18,10 +19,14 @@
   border-radius: 5px;
 }
 
-#deliveryForm, #requests, #myDeliveriesPanel {
+#deliveryForm, #requests, #myDeliveriesPanel, #error {
   background-color: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 5px;
+}
+
+#error {
+  text-align: center;
 }
 
 #deliveryForm {

@@ -1,11 +1,14 @@
 import React from 'react';
 import './RequestsPanel.css';
 import axios from "axios";
-import ago from "s-ago";
+import TimeAgo from 'react-timeago';
+import englishStrings from './ShortStrings';
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 
 function toLocalDelta(timestamp) {
+    const formatter = buildFormatter(englishStrings);
     const time = new Date(Date.parse(timestamp));
-    return ago(time);
+    return <TimeAgo date={time} formatter={formatter} />;
 }
 
 class RequestsPanel extends React.Component {
@@ -39,7 +42,7 @@ class RequestsPanel extends React.Component {
                 className={"list-group-item d-flex justify-content-between align-items-center " + ((index !== requestsLength - 1) ? "mb-2" : "")}>
                {req.foodStation}
                 <div className="d-flex align-items-center float-right">
-                    <div style={{marginRight: "1rem"}}>
+                    <div style={{marginRight: ".50rem"}}>
                         {toLocalDelta(req.created)}
                     </div>
                     <button className="float-right btn btn-dark">

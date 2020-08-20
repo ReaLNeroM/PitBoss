@@ -29,7 +29,7 @@ class NavBar extends React.Component {
                     <ul className="navbar-nav mr-auto">
                         <li className={"nav-item " + ((tab === "all-requests" || tab === "") ? "active" : "")}>
                             <Nav.Link className="nav-link" as={Link} href="all-requests" to="all-requests">
-                            Deliver!
+                                Deliver!
                             </Nav.Link>
                         </li>
                         <li className={"nav-item " + (tab === "ask-for-delivery" ? "active" : "")}>
@@ -39,7 +39,7 @@ class NavBar extends React.Component {
                         </li>
                         <li className={"nav-item " + (tab === "my-deliveries" ? "active" : "")}>
                             <Nav.Link className="nav-link" as={Link} href="my-deliveries" to="my-deliveries">
-                            My deliveries
+                                My deliveries
                             </Nav.Link>
                         </li>
                     </ul>

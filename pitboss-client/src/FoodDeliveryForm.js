@@ -137,7 +137,7 @@ class FoodDeliveryForm extends React.Component {
                                 name="foodStation"
                                 value={foodStation}
                                 required >
-                            <option disabled value={FoodStation.None}> GrubHub Station </option>
+                            <option disabled value={FoodStation.None}> -- Please select GrubHub Station -- </option>
                             <option value={FoodStation.Pit}>Pit</option>
                             <option value={FoodStation.Starbucks}>Starbucks</option>
                             <option value={FoodStation.GrabNGo}>Grab N' Go</option>

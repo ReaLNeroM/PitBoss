@@ -28,33 +28,35 @@ class App extends Component {
                 <RegisterForm
                     apiUrl={apiUrl} />
                 <Switch>
-                    <Route
-                        path="/"
-                        exact >
+                    <Route exact path="/" >
                         <RequestsPanel
                                     apiUrl={apiUrl} />
                     </Route>
-                    <Route
-                        path="/all-requests"
+                    <Route 
+                        exact path="/all-requests"
                         render={() =>
                                 <RequestsPanel
-                                    apiUrl={apiUrl} />}
-                            exact />
-                    <Route
-                        path="/ask-for-delivery"
+                                    apiUrl={apiUrl} />} />
+                    <Route 
+                        exact path="/ask-for-delivery"
                         render={() =>
                             <div id="deliveryForm">
                                 <FoodDeliveryForm
                                     apiUrl={apiUrl} />
-                            </div>}
-                        exact />
+                            </div>} />
                     <Route
-                        path="/my-deliveries"
+                        exact path="/my-deliveries"
                         render={() =>
                             <div id="myDeliveriesPanel">
                                 <MyDeliveriesPanel />
-                            </div>}
-                        exact />
+                            </div>} />
+                    <Route
+                        render={() => 
+                            <div id="error">
+                                <h4 class="alert alert-danger mb-0" role="alert">
+                                    404 error: Page not found.
+                                </h4>
+                            </div>} />
                 </Switch>
             </Router>
         </div>
