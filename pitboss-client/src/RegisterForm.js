@@ -80,11 +80,11 @@ class RegisterForm extends React.Component {
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="registerModal" tabIndex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Register an account</h5>
+                            <h5 className="modal-title" id="registerModalLabel">Register an account</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -110,7 +110,7 @@ class RegisterForm extends React.Component {
                                 <div className="form-group">
                                     <input type="email"
                                     className="form-control"
-                                    id="email"
+                                    id="register-email"
                                     name="email"
                                     placeholder="email@u.rochester.edu"
                                     required />
@@ -118,7 +118,7 @@ class RegisterForm extends React.Component {
                                 <div className="form-group">
                                     <input type="password"
                                     className="form-control"
-                                    id="password"
+                                    id="register-password"
                                     name="password"
                                     placeholder="Password"
                                     required />
@@ -126,7 +126,7 @@ class RegisterForm extends React.Component {
                                 <div className="form-group">
                                     <input type="password"
                                     className="form-control"
-                                    id="password-repeat"
+                                    id="register-password-repeat"
                                     name="password-repeat"
                                     placeholder="Password (confirm)"
                                     required />

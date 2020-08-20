@@ -5,14 +5,24 @@ import { Link, withRouter } from 'react-router-dom'
 class NavBar extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             title: props.title,
-            description: props.description
+            isLoggedIn: props.isLoggedIn
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { title: newTitle, isLoggedIn: newIsLoggedin } = nextProps;
+        const { title, isLoggedIn } = this.props;
+    
+        if (title !== newTitle || isLoggedIn !== newIsLoggedin) {
+            this.setState({ title: newTitle, isLoggedIn: newIsLoggedin });
+        }
+    }
+    
     render() {
-        const { title } = this.state;
+        const { title, isLoggedIn } = this.state;
         const { location } = this.props;
         const tab = location.pathname.slice(1);
 
@@ -59,9 +69,24 @@ class NavBar extends React.Component {
                             <div
                                 className="dropdown-menu dropdown-menu-right dropdown-info"
                                 aria-labelledby="navbarDropdownMenuLink-4">
-                                <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#exampleModal">
-                                    Register
-                                </div>
+                                {isLoggedIn === false && 
+                                    <div>
+                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#registerModal">
+                                            Register
+                                        </div>
+                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#loginModal">
+                                            Login
+                                        </div>
+                                    </div>}
+                                {isLoggedIn === true && 
+                                    <div>
+                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#myProfileModal">
+                                            My profile
+                                        </div>
+                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#logoutModal">
+                                            Logout
+                                        </div>
+                                    </div>}
                             </div>
                         </li>
                     </ul>

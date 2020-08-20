@@ -4,6 +4,7 @@ import FoodDeliveryForm from './FoodDeliveryForm';
 import MyDeliveriesPanel from './MyDeliveriesPanel';
 import RequestsPanel from './RequestsPanel';
 import RegisterForm from './RegisterForm';
+import LoginForm from './LoginForm';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -13,9 +14,28 @@ import {
 } from "react-router-dom";
 
 class App extends Component {
-    render() {
-      const apiUrl = process.env.REACT_APP_API_URL;
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn: false,
+            userId: null
+        };
+    }
 
+    onLoginChange(event){
+        this.setState({
+            isLoggedIn: event.isLoggedIn,
+            userId: event.userId
+        });
+        console.log(event);
+    }
+
+    render() {
+      const { isLoggedIn, userId } = this.state;
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const onLoginChange = this.onLoginChange.bind(this);
+      console.log(`App: ${isLoggedIn}`);
+      
       return (
         <div id="App" className="container">
             <Router basename={process.env.PUBLIC_URL}
@@ -23,14 +43,18 @@ class App extends Component {
                 <div id="navBar">
                     <NavBar
                         title="PitBoss"
-                        description="Help out and deliver food for students in quarantine! (UR only)" />
+                        isLoggedIn={isLoggedIn} />
                 </div>
                 <RegisterForm
-                    apiUrl={apiUrl} />
+                    apiUrl={apiUrl}
+                    onLoginChange={onLoginChange} />
+                <LoginForm
+                    apiUrl={apiUrl}
+                    onLoginChange={onLoginChange} />
                 <Switch>
                     <Route exact path="/" >
                         <RequestsPanel
-                                    apiUrl={apiUrl} />
+                            apiUrl={apiUrl} />
                     </Route>
                     <Route 
                         exact path="/all-requests"

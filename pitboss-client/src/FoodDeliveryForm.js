@@ -82,7 +82,7 @@ class FoodDeliveryForm extends React.Component {
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(this.props.history.push('/all-requests'))
+            }).then(this.props.history.push('/all-requests'));
         } else {
             alert(`Error: ${validationError}.`);
         }
