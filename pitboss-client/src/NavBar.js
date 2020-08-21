@@ -8,7 +8,8 @@ class NavBar extends React.Component {
         this.state = {
             apiUrl: props.apiUrl,
             title: props.title,
-            isLoggedIn: props.isLoggedIn
+            isLoggedIn: props.isLoggedIn,
+            onLoginChange: props.onLoginChange
         };
     }
 
@@ -27,7 +28,10 @@ class NavBar extends React.Component {
             credentials: 'include'
         })
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => this.state.onLoginChange({
+                isLoggedIn: false,
+                userId: null
+            }));
     }
 
     render() {
@@ -74,7 +78,7 @@ class NavBar extends React.Component {
                                 href="#"
                                 aria-expanded="true">
                                 <i className="fas fa-user" />
-                                Profile
+                                {isLoggedIn ? "Profile" : "Not logged in"}
                             </div>
                             <div
                                 className="dropdown-menu dropdown-menu-right dropdown-info"

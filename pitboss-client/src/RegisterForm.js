@@ -114,6 +114,7 @@ class RegisterForm extends React.Component {
                                     id="register-email"
                                     name="email"
                                     placeholder="email@u.rochester.edu"
+                                    autoComplete="username"
                                     required />
                                 </div>
                                 <div className="form-group">
@@ -122,6 +123,7 @@ class RegisterForm extends React.Component {
                                     id="register-password"
                                     name="password"
                                     placeholder="Password"
+                                    autoComplete="new-password"
                                     required />
                                 </div>
                                 <div className="form-group">
@@ -130,6 +132,7 @@ class RegisterForm extends React.Component {
                                     id="register-password-repeat"
                                     name="password-repeat"
                                     placeholder="Password (confirm)"
+                                    autoComplete="new-password"
                                     required />
                                 </div>
                                 <div className="form-group form-check">

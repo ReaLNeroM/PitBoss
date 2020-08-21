@@ -88,6 +88,7 @@ class Login extends React.Component {
                                     id="loginEmail"
                                     name="email"
                                     placeholder="email@u.rochester.edu"
+                                    autoComplete="username"
                                     required />
                                 </div>
                                 <div className="form-group">
@@ -96,6 +97,7 @@ class Login extends React.Component {
                                     id="loginPassword"
                                     name="password"
                                     placeholder="Password"
+                                    autoComplete="current-password"
                                     required />
                                 </div>
                             </div>

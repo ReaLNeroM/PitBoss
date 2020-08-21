@@ -34,14 +34,20 @@ class App extends Component {
             method: 'GET',
             credentials: 'include'
         })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error(response.statusText);
+                }
+                response.json();
+            })
             .then(response => response.json())
             .then(data => {
                 this.setState({
                     isLoggedIn: true,
                     userId: data.userId
-                });
-                console.log(data.status);
-            });
+                })
+            })
+            .catch(err => console.log(err));
     }
 
     onLoginChange(event){
@@ -63,6 +69,7 @@ class App extends Component {
                         <NavBar
                             apiUrl={apiUrl}
                             title="PitBoss"
+                            onLoginChange={onLoginChange}
                             isLoggedIn={isLoggedIn} />
                     </div>
                     <RegisterForm
