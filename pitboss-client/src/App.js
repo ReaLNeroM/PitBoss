@@ -43,13 +43,11 @@ class App extends Component {
             isLoggedIn: event.isLoggedIn,
             userId: event.userId
         });
-        console.log(event);
     }
 
     render() {
         const { isLoggedIn, userId, apiUrl} = this.state;
         const onLoginChange = this.onLoginChange.bind(this);
-        console.log(`App: ${isLoggedIn}`);
 
         return (
             <div id="App" className="container">

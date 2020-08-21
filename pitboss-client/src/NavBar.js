@@ -79,7 +79,7 @@ class NavBar extends React.Component {
                             <div
                                 className="dropdown-menu dropdown-menu-right dropdown-info"
                                 aria-labelledby="navbarDropdownMenuLink-4">
-
+                                {isLoggedIn === false &&
                                     <div>
                                         <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#registerModal">
                                             Register
@@ -87,8 +87,8 @@ class NavBar extends React.Component {
                                         <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#loginModal">
                                             Login
                                         </div>
-                                    </div>
-
+                                    </div>}
+                                {isLoggedIn === true &&
                                     <div>
                                         <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#myProfileModal">
                                             My profile
@@ -96,7 +96,7 @@ class NavBar extends React.Component {
                                         <button onClick={doLogout} className="dropdown-item waves-effect waves-light">
                                             Logout
                                         </button>
-                                    </div>
+                                    </div>}
                             </div>
                         </li>
                     </ul>
