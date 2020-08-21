@@ -21,7 +21,7 @@ class MyDeliveriesPanel extends React.Component {
 
     async getDeliveries() {
         axios.get(`${this.state.apiUrl}/my_deliveries`)
-            .then(response => response.data)
+            .then(response => response.json())
             .then(newMyDeliveries =>
                 this.setState({myDeliveries: newMyDeliveries,
                                haveMyDeliveriesLoaded: true}))

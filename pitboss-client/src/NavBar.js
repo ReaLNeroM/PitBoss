@@ -5,25 +5,35 @@ import { Link, withRouter } from 'react-router-dom'
 class NavBar extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
+            apiUrl: props.apiUrl,
             title: props.title,
             isLoggedIn: props.isLoggedIn
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        const { title: newTitle, isLoggedIn: newIsLoggedin } = nextProps;
+    componentDidUpdate(prevProps) {
+        const { title: oldTitle, isLoggedIn: oldIsLoggedin } = prevProps;
         const { title, isLoggedIn } = this.props;
-    
-        if (title !== newTitle || isLoggedIn !== newIsLoggedin) {
-            this.setState({ title: newTitle, isLoggedIn: newIsLoggedin });
+
+        if (title !== oldTitle || isLoggedIn !== oldIsLoggedin) {
+            this.setState({ title: title, isLoggedIn: isLoggedIn });
         }
     }
-    
+
+    async doLogout() {
+        fetch(`${this.state.apiUrl}/auth/logout`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then(data => console.log(data));
+    }
+
     render() {
         const { title, isLoggedIn } = this.state;
         const { location } = this.props;
+        const doLogout = this.doLogout.bind(this);
         const tab = location.pathname.slice(1);
 
         return (
@@ -69,7 +79,7 @@ class NavBar extends React.Component {
                             <div
                                 className="dropdown-menu dropdown-menu-right dropdown-info"
                                 aria-labelledby="navbarDropdownMenuLink-4">
-                                {isLoggedIn === false && 
+
                                     <div>
                                         <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#registerModal">
                                             Register
@@ -77,16 +87,16 @@ class NavBar extends React.Component {
                                         <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#loginModal">
                                             Login
                                         </div>
-                                    </div>}
-                                {isLoggedIn === true && 
+                                    </div>
+
                                     <div>
                                         <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#myProfileModal">
                                             My profile
                                         </div>
-                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#logoutModal">
+                                        <button onClick={doLogout} className="dropdown-item waves-effect waves-light">
                                             Logout
-                                        </div>
-                                    </div>}
+                                        </button>
+                                    </div>
                             </div>
                         </li>
                     </ul>

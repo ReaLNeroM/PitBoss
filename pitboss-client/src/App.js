@@ -12,7 +12,6 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-import axios from 'axios';
 
 class App extends Component {
     constructor(props){
@@ -22,7 +21,7 @@ class App extends Component {
             isLoggedIn: false,
             userId: null
         };
-    
+
         this.doLogin = this.doLogin.bind(this);
     }
 
@@ -31,9 +30,12 @@ class App extends Component {
     }
 
     async doLogin(){
-        axios.get(`${this.state.apiUrl}/auth/cookie`)
+        fetch(`${this.state.apiUrl}/auth/cookie`, {
+            method: 'GET',
+            credentials: 'include'
+        })
             .then(response => response.json())
-            .then(data => this.setState({isLoggedIn: data.isLoggedIn, userId: data.userId}));
+            .then(data => console.log(data));
     }
 
     onLoginChange(event){
@@ -45,60 +47,60 @@ class App extends Component {
     }
 
     render() {
-      const { isLoggedIn, userId } = this.state;
-      const apiUrl = process.env.REACT_APP_API_URL;
-      const onLoginChange = this.onLoginChange.bind(this);
-      console.log(`App: ${isLoggedIn}`);
-      
-      return (
-        <div id="App" className="container">
-            <Router basename={process.env.PUBLIC_URL}
-                    hashType="noslash">
-                <div id="navBar">
-                    <NavBar
-                        title="PitBoss"
-                        isLoggedIn={isLoggedIn} />
-                </div>
-                <RegisterForm
-                    apiUrl={apiUrl}
-                    onLoginChange={onLoginChange} />
-                <LoginForm
-                    apiUrl={apiUrl}
-                    onLoginChange={onLoginChange} />
-                <Switch>
-                    <Route exact path="/" >
-                        <RequestsPanel
-                            apiUrl={apiUrl} />
-                    </Route>
-                    <Route 
-                        exact path="/all-requests"
-                        render={() =>
-                                <RequestsPanel
-                                    apiUrl={apiUrl} />} />
-                    <Route 
-                        exact path="/ask-for-delivery"
-                        render={() =>
-                            <div id="deliveryForm">
-                                <FoodDeliveryForm
-                                    apiUrl={apiUrl} />
-                            </div>} />
-                    <Route
-                        exact path="/my-deliveries"
-                        render={() =>
-                            <div id="myDeliveriesPanel">
-                                <MyDeliveriesPanel />
-                            </div>} />
-                    <Route
-                        render={() => 
-                            <div id="error">
-                                <h4 class="alert alert-danger mb-0" role="alert">
-                                    404 error: Page not found.
-                                </h4>
-                            </div>} />
-                </Switch>
-            </Router>
-        </div>
-      );
+        const { isLoggedIn, userId, apiUrl} = this.state;
+        const onLoginChange = this.onLoginChange.bind(this);
+        console.log(`App: ${isLoggedIn}`);
+
+        return (
+            <div id="App" className="container">
+                <Router basename={process.env.PUBLIC_URL}
+                        hashType="noslash">
+                    <div id="navBar">
+                        <NavBar
+                            apiUrl={apiUrl}
+                            title="PitBoss"
+                            isLoggedIn={isLoggedIn} />
+                    </div>
+                    <RegisterForm
+                        apiUrl={apiUrl}
+                        onLoginChange={onLoginChange} />
+                    <LoginForm
+                        apiUrl={apiUrl}
+                        onLoginChange={onLoginChange} />
+                    <Switch>
+                        <Route exact path="/" >
+                            <RequestsPanel
+                                apiUrl={apiUrl} />
+                        </Route>
+                        <Route
+                            exact path="/all-requests"
+                            render={() =>
+                                    <RequestsPanel
+                                        apiUrl={apiUrl} />} />
+                        <Route
+                            exact path="/ask-for-delivery"
+                            render={() =>
+                                <div id="deliveryForm">
+                                    <FoodDeliveryForm
+                                        apiUrl={apiUrl} />
+                                </div>} />
+                        <Route
+                            exact path="/my-deliveries"
+                            render={() =>
+                                <div id="myDeliveriesPanel">
+                                    <MyDeliveriesPanel />
+                                </div>} />
+                        <Route
+                            render={() =>
+                                <div id="error">
+                                    <h4 class="alert alert-danger mb-0" role="alert">
+                                        404 error: Page not found.
+                                    </h4>
+                                </div>} />
+                    </Switch>
+                </Router>
+            </div>
+        );
     }
 }
 

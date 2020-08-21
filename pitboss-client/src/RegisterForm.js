@@ -64,6 +64,7 @@ class RegisterForm extends React.Component {
         if(validationError === ''){
             fetch(`${this.state.apiUrl}/auth/register`, {
                 method: 'POST',
+                credentials: 'include',
                 body: JSON.stringify(registerData),
                 headers: {
                     'content-type': 'application/json'

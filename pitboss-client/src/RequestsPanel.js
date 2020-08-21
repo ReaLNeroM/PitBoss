@@ -1,6 +1,5 @@
 import React from 'react';
 import './RequestsPanel.css';
-import axios from "axios";
 import TimeAgo from 'react-timeago';
 import englishStrings from './ShortStrings';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
@@ -28,8 +27,10 @@ class RequestsPanel extends React.Component {
     }
 
     async getRequests() {
-        axios.get(`${this.state.apiUrl}/requests`)
-            .then(response => response.data)
+        fetch(`${this.state.apiUrl}/requests`, {
+            credentials: 'include'
+        })
+            .then(response => response.json())
             .then(newRequests => this.setState({requests: newRequests, haveRequestsLoaded: true}));
     }
 

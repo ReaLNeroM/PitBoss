@@ -37,6 +37,7 @@ class Login extends React.Component {
         if(validationError === ''){
             fetch(`${this.state.apiUrl}/auth/login`, {
                 method: 'POST',
+                credentials: 'include',
                 body: JSON.stringify(loginData),
                 headers: {
                     'content-type': 'application/json'
@@ -75,7 +76,7 @@ class Login extends React.Component {
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        {error !== null && 
+                        {error !== null &&
                             <div className="alert alert-danger" role="alert">
                                 {error}
                             </div>}

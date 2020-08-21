@@ -78,6 +78,7 @@ class FoodDeliveryForm extends React.Component {
         if(validationError === ''){
             fetch(`${this.state.apiUrl}/create_request`, {
                 method: 'POST',
+                credentials: 'include',
                 body: JSON.stringify(request),
                 headers: {
                     'content-type': 'application/json'
