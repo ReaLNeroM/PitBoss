@@ -35,7 +35,13 @@ class App extends Component {
             credentials: 'include'
         })
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => {
+                this.setState({
+                    isLoggedIn: true,
+                    userId: data.userId
+                });
+                console.log(data.status);
+            });
     }
 
     onLoginChange(event){
