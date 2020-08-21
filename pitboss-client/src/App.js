@@ -12,14 +12,28 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import axios from 'axios';
 
 class App extends Component {
     constructor(props){
         super(props);
         this.state = {
+            apiUrl: process.env.REACT_APP_API_URL,
             isLoggedIn: false,
             userId: null
         };
+    
+        this.doLogin = this.doLogin.bind(this);
+    }
+
+    componentDidMount(){
+        this.doLogin();
+    }
+
+    async doLogin(){
+        axios.get(`${this.state.apiUrl}/auth/cookie`)
+            .then(response => response.json())
+            .then(data => this.setState({isLoggedIn: data.isLoggedIn, userId: data.userId}));
     }
 
     onLoginChange(event){
