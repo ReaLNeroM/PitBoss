@@ -297,7 +297,12 @@ app.post('/auth/logout', (req: express.Request, res: express.Response, next: exp
     next(new Error('You\'re already logged out.'));
   }
 
-  res.clearCookie('userId');
+  res.clearCookie('userId', {
+    expires: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000),
+    sameSite: 'none',
+    httpOnly: true,
+    secure: options.isSecure,
+  });
   res.json({
     status: 'Logged out successfully!',
   });
