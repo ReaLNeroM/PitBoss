@@ -17,12 +17,6 @@
             "type": "string"
         }
     },
-    "required": [
-        "dormAndRoom",
-        "email",
-        "foodStation",
-        "fullName",
-        "orderNumber"
-    ],
     "type": "object"
 }
+
