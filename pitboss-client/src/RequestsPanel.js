@@ -39,14 +39,16 @@ class RequestsPanel extends React.Component {
         const requestsLength = requests.length;
         const requestsList = requests.map((req, index) => (
             <li
-                key={index}
-                className={"list-group-item d-flex justify-content-between align-items-center " + ((index !== requestsLength - 1) ? "mb-2" : "")}>
-               {req.foodStation}
-                <div className="d-flex align-items-center float-right">
-                    <div style={{marginRight: ".50rem"}}>
-                        {toLocalDelta(req.created)}
-                    </div>
-                    <button className="float-right btn btn-dark">
+                key={req.requestId}
+                className={"d-flex justify-content-between list-group-item " + ((index !== requestsLength - 1) ? "mb-2" : "")}>
+                <div>
+                    {req.foodStation}
+                    <br />
+                    <br />
+                    {toLocalDelta(req.created)}
+                </div>
+                <div className="d-flex align-items-center">
+                    <button className="btn btn-dark">
                         Deliver!
                     </button>
                 </div>
