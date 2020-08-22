@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-bootstrap/Modal';
 
 function validateRequest(registerData){
     if(registerData.schemaVersion.trim() === ''){
@@ -20,8 +21,20 @@ class RegisterForm extends React.Component {
         this.state = {
             apiUrl: props.apiUrl,
             hasAllergy: false,
-            onLoginChange: props.onLoginChange
+            error: null,
+            onLoginChange: props.onLoginChange,
+            registerModalShow: props.registerModalShow,
+            registerModalChange: props.registerModalChange
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        const { registerModalShow: oldRegisterModalShow } = prevProps;
+        const { registerModalShow } = this.props;
+
+        if (registerModalShow !== oldRegisterModalShow) {
+            this.setState({ registerModalShow: registerModalShow });
+        }
     }
 
     allergyChanged(event) {
@@ -32,8 +45,7 @@ class RegisterForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const onLoginChange = this.state.onLoginChange.bind(this);
-        const { apiUrl, hasAllergy } = this.state;
+        const { apiUrl, hasAllergy, registerModalChange, onLoginChange } = this.state;
 
         const formData = new FormData(event.target);
 
@@ -72,114 +84,130 @@ class RegisterForm extends React.Component {
                 headers: {
                     'content-type': 'application/json'
                 }
-            })
-                .then(response => response.json())
-                .then(data => onLoginChange({
-                    isLoggedIn: true,
-                    userId: data.userId
-                }));
+            }).then(response =>
+                response.json()
+                    .then(data => {
+                        if(response.status === 200){
+                            registerModalChange(false);
+                            this.setState({
+                                error: null,
+                                registerModalShow: false
+                            });
+                            console.log(`Logged in as ${data.userId}`);
+                            onLoginChange({
+                                isLoggedIn: true,
+                                userId: data.userId
+                            });
+                        } else {
+                            this.setState({
+                                error: `${response.status} Error: ${data.message}`
+                            });
+                        }
+                    })
+            );
         } else {
-            alert(`Error: ${validationError}.`);
+            this.setState({
+                error: `Error: ${validationError}.`
+            });
         }
     }
 
     render() {
-        const { hasAllergy } = this.state;
+        const { registerModalShow, hasAllergy, error } = this.state;
+        const registerModalChange = this.state.registerModalChange.bind(this);
         const allergyChanged = this.allergyChanged.bind(this);
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <div className="modal fade" id="registerModal" tabIndex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="registerModalLabel">Register an account</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
+            <Modal show={registerModalShow}>
+                <Modal.Header>
+                    <h5 className="modal-title" id="registerModalLabel">Register an account</h5>
+                </Modal.Header>
+                <form onSubmit={handleSubmit}>
+                    <Modal.Body>
+                        {error !== null &&
+                            <div className="alert alert-danger" role="alert">
+                                {error}
+                            </div>}
+                        <div className="form-group">
+                            <input type="text"
+                            className="form-control"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Full Name"
+                            required />
                         </div>
-                        <form onSubmit={handleSubmit}>
-                            <div className="modal-body">
-                                <div className="form-group">
-                                    <input type="text"
-                                    className="form-control"
-                                    id="fullName"
-                                    name="fullName"
-                                    placeholder="Full Name"
-                                    required />
-                                </div>
-                                <div className="form-group">
-                                    <input type="text"
-                                    className="form-control"
-                                    id="dormAndRoom"
-                                    name="dormAndRoom"
-                                    placeholder="Dorm and Room"
-                                    required />
-                                </div>
-                                <div className="form-group">
-                                    <input type="email"
-                                    className="form-control"
-                                    id="register-email"
-                                    name="email"
-                                    placeholder="email@u.rochester.edu"
-                                    autoComplete="username"
-                                    required />
-                                </div>
-                                <div className="form-group">
-                                    <input type="password"
-                                    className="form-control"
-                                    id="register-password"
-                                    name="password"
-                                    placeholder="Password"
-                                    autoComplete="new-password"
-                                    required />
-                                </div>
-                                <div className="form-group">
-                                    <input type="password"
-                                    className="form-control"
-                                    id="register-password-repeat"
-                                    name="password-repeat"
-                                    placeholder="Password (confirm)"
-                                    autoComplete="new-password"
-                                    required />
-                                </div>
-                                <div className="form-group form-check">
-                                    <input
-                                        type="checkbox"
-                                        defaultChecked={hasAllergy}
-                                        onChange={allergyChanged}
-                                        className="form-check-input"
-                                        id="exampleCheck1" />
-                                    <label className="form-check-label" htmlFor="exampleCheck1">Any allergies?</label>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text"
-                                        className="form-control"
-                                        id="allergies"
-                                        name="allergies"
-                                        placeholder="Allergies"
-                                        disabled={hasAllergy ? "" : "disabled"}
-                                        required={hasAllergy ? "required" : ""} />
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button
-                                    type="submit"
-                                    id="registerButton"
-                                    className="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                        <div className="form-group">
+                            <input type="text"
+                            className="form-control"
+                            id="dormAndRoom"
+                            name="dormAndRoom"
+                            placeholder="Dorm and Room"
+                            required />
+                        </div>
+                        <div className="form-group">
+                            <input type="email"
+                            className="form-control"
+                            id="register-email"
+                            name="email"
+                            placeholder="email@u.rochester.edu"
+                            autoComplete="username"
+                            required />
+                        </div>
+                        <div className="form-group">
+                            <input type="password"
+                            className="form-control"
+                            id="register-password"
+                            name="password"
+                            placeholder="Password"
+                            autoComplete="new-password"
+                            required />
+                        </div>
+                        <div className="form-group">
+                            <input type="password"
+                            className="form-control"
+                            id="register-password-repeat"
+                            name="password-repeat"
+                            placeholder="Password (confirm)"
+                            autoComplete="new-password"
+                            required />
+                        </div>
+                        <div className="form-group form-check">
+                            <input
+                                type="checkbox"
+                                defaultChecked={hasAllergy}
+                                onChange={allergyChanged}
+                                className="form-check-input"
+                                id="exampleCheck1" />
+                            <label className="form-check-label" htmlFor="exampleCheck1">Any allergies?</label>
+                        </div>
+                        <div className="form-group">
+                            <input type="text"
+                                className="form-control"
+                                id="allergies"
+                                name="allergies"
+                                placeholder="Allergies"
+                                disabled={hasAllergy ? "" : "disabled"}
+                                required={hasAllergy ? "required" : ""} />
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button
+                            type="button"
+                            onClick={registerModalChange}
+                            className="btn btn-secondary"
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button
+                            type="submit"
+                            id="registerButton"
+                            className="btn btn-primary">
+                            Register
+                        </button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
         );
     }
 }

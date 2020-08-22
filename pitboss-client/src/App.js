@@ -19,7 +19,9 @@ class App extends Component {
         this.state = {
             apiUrl: process.env.REACT_APP_API_URL,
             isLoggedIn: false,
-            userId: null
+            userId: null,
+            loginModalShow: false,
+            registerModalShow: false
         };
 
         this.startSession = this.startSession.bind(this);
@@ -58,9 +60,39 @@ class App extends Component {
         });
     }
 
+    loginModalChange(event){
+        if(typeof event === "boolean"){
+            this.setState({
+                loginModalShow: event
+            });
+        } else if(typeof event.target.value === "string"){
+            this.setState({
+                loginModalShow: (event.target.value === "true")
+            });
+        } else {
+            throw new Error("Could not change login modal value.");
+        }
+    }
+
+    registerModalChange(event){
+        if(typeof event === "boolean"){
+            this.setState({
+                registerModalShow: event
+            });
+        } else if(typeof event.target.value === "string"){
+            this.setState({
+                registerModalShow: (event.target.value === "true")
+            });
+        } else {
+            throw new Error("Could not change register modal value.");
+        }
+    }
+
     render() {
-        const { isLoggedIn, userId, apiUrl} = this.state;
+        const { isLoggedIn, userId, apiUrl, loginModalShow, registerModalShow } = this.state;
         const onLoginChange = this.onLoginChange.bind(this);
+        const loginModalChange = this.loginModalChange.bind(this);
+        const registerModalChange = this.registerModalChange.bind(this);
 
         return (
             <div id="App" className="container">
@@ -71,14 +103,21 @@ class App extends Component {
                             apiUrl={apiUrl}
                             title="PitBoss"
                             onLoginChange={onLoginChange}
-                            isLoggedIn={isLoggedIn} />
+                            isLoggedIn={isLoggedIn}
+                            loginModalChange={loginModalChange}
+                            registerModalChange={registerModalChange} />
                     </div>
                     <RegisterForm
                         apiUrl={apiUrl}
-                        onLoginChange={onLoginChange} />
+                        onLoginChange={onLoginChange}
+                        registerModalShow={registerModalShow}
+                        registerModalChange={registerModalChange} />
+
                     <LoginForm
                         apiUrl={apiUrl}
-                        onLoginChange={onLoginChange} />
+                        onLoginChange={onLoginChange}
+                        loginModalShow={loginModalShow}
+                        loginModalChange={loginModalChange} />
                     <Switch>
                         <Route exact path="/" >
                             <RequestsPanel
@@ -95,6 +134,7 @@ class App extends Component {
                                 <div id="deliveryForm">
                                     <FoodDeliveryForm
                                         apiUrl={apiUrl}
+                                        isLoggedIn={isLoggedIn}
                                         userId={userId} />
                                 </div>} />
                         <Route

@@ -15,9 +15,20 @@ class FoodDeliveryForm extends React.Component {
         super(props);
         this.state = {
             apiUrl: props.apiUrl,
+            error: null,
             foodStation: FoodStation.None,
+            isLoggedIn: props.isLoggedIn,
             userId: props.userId
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        const { isLoggedIn: oldIsLoggedIn, userId: oldUserId } = prevProps;
+        const { isLoggedIn, userId } = this.props;
+
+        if (isLoggedIn !== oldIsLoggedIn || userId !== oldUserId) {
+            this.setState({ isLoggedIn: isLoggedIn, userId: oldUserId });
+        }
     }
 
     foodStationChanged(event) {
@@ -28,7 +39,7 @@ class FoodDeliveryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { apiUrl, userId } = this.state;
+        const { apiUrl, userId, isLoggedIn } = this.state;
         const formData = new FormData(event.target);
 
         const schemaVersion = "request.1";
@@ -42,7 +53,8 @@ class FoodDeliveryForm extends React.Component {
             foodStation,
             orderNumber
         };
-        const validationError = validateRequest(request);
+        const validationError =
+            (isLoggedIn !== true) ? "You must be logged in" : validateRequest(request);
 
         if(validationError === ''){
             fetch(`${apiUrl}/create-request`, {
@@ -54,17 +66,23 @@ class FoodDeliveryForm extends React.Component {
                 }
             }).then(this.props.history.push('/all-requests'));
         } else {
-            alert(`Error: ${validationError}.`);
+            this.setState({
+               error: `Error: ${validationError}.`
+            });
         }
     }
 
     render() {
-        const { foodStation } = this.state;
+        const { foodStation, error } = this.state;
         const foodStationChanged = this.foodStationChanged.bind(this);
         const handleSubmit = this.handleSubmit.bind(this)
 
         return (
             <form onSubmit={handleSubmit}>
+                {error !== null &&
+                    <div className="alert alert-danger" role="alert">
+                        {error}
+                    </div>}
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <select className="form-control"

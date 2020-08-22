@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav'
-import { Link, withRouter } from 'react-router-dom'
+import Nav from 'react-bootstrap/Nav';
+import { Link, withRouter } from 'react-router-dom';
 
 function toPrettyTabName(tab){
     if(tab === "all-requests"){
@@ -21,7 +21,9 @@ class NavBar extends React.Component {
             apiUrl: props.apiUrl,
             title: props.title,
             isLoggedIn: props.isLoggedIn,
-            onLoginChange: props.onLoginChange
+            onLoginChange: props.onLoginChange,
+            loginModalChange: props.loginModalChange.bind(this),
+            registerModalChange: props.registerModalChange.bind(this)
         };
     }
 
@@ -47,7 +49,7 @@ class NavBar extends React.Component {
     }
 
     render() {
-        const { title, isLoggedIn } = this.state;
+        const { title, isLoggedIn, loginModalChange, registerModalChange } = this.state;
         const { location } = this.props;
         const doLogout = this.doLogout.bind(this);
         const tab = location.pathname.slice(1);
@@ -103,19 +105,30 @@ class NavBar extends React.Component {
                                 aria-labelledby="navbarDropdownMenuLink-4">
                                 {isLoggedIn === false &&
                                     <div>
-                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#registerModal">
+                                        <button
+                                            value={true}
+                                            className="dropdown-item waves-effect waves-light"
+                                            onClick={registerModalChange}>
                                             Register
-                                        </div>
-                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#loginModal">
+                                        </button>
+                                        <button
+                                            value={true}
+                                            className="dropdown-item waves-effect waves-light"
+                                            onClick={loginModalChange}>
                                             Login
-                                        </div>
+                                        </button>
                                     </div>}
                                 {isLoggedIn === true &&
                                     <div>
-                                        <div className="dropdown-item waves-effect waves-light" data-toggle="modal" data-target="#myProfileModal">
+                                        <button
+                                            id="openMyProfile"
+                                            className="dropdown-item waves-effect waves-light"
+                                            >
                                             My profile
-                                        </div>
-                                        <button onClick={doLogout} className="dropdown-item waves-effect waves-light">
+                                        </button>
+                                        <button
+                                            className="dropdown-item waves-effect waves-light"
+                                            onClick={doLogout}>
                                             Logout
                                         </button>
                                     </div>}

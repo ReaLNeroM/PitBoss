@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
 
 function validateRequest(loginData){
     if(!loginData.email.includes('@u.rochester.edu')){
@@ -16,12 +16,26 @@ class Login extends React.Component {
         super(props);
         this.state = {
             apiUrl: props.apiUrl,
-            error: null
+            error: null,
+            onLoginChange: props.onLoginChange,
+            loginModalShow: props.loginModalShow,
+            loginModalChange: props.loginModalChange
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        const { loginModalShow: oldLoginModalShow } = prevProps;
+        const { loginModalShow } = this.props;
+
+        if (loginModalShow !== oldLoginModalShow) {
+            this.setState({ loginModalShow: loginModalShow });
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        const { onLoginChange } = this.state;
+        const loginModalChange = this.state.loginModalChange.bind(this);
         const formData = new FormData(event.target);
 
         const email = formData.get('email');
@@ -42,85 +56,88 @@ class Login extends React.Component {
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(response => {
+            }).then(response =>
                 response.json()
                     .then(data => {
                         if(response.status === 200){
-                            this.setState({error: null});
+                            loginModalChange(false);
+                            this.setState({
+                                error: null,
+                                registerModalShow: false
+                            });
                             console.log(`Logged in as ${data.userId}`);
-                            this.props.onLoginChange({
+                            onLoginChange({
                                 isLoggedIn: true,
                                 userId: data.userId
                             });
                         } else {
-                            this.setState({error: `${response.status} Error: ${data.message}`});
+                            this.setState({
+                                error: `${response.status} Error: ${data.message}`
+                            });
                         }
                     })
-            });
+            );
         } else {
-            alert(`Error: ${validationError}.`);
+            this.setState({
+                error: `Error: ${validationError}.`
+            });
         }
     }
 
     render() {
-        const error = this.state.error;
+        const { loginModalShow, error } = this.state;
+        const loginModalChange = this.state.loginModalChange.bind(this);
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <div className="modal fade" id="loginModal" tabIndex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="loginModalLabel">Login to your account</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+            <Modal show={loginModalShow}>
+                <Modal.Header>
+                    <h5 className="modal-title" id="loginModalLabel">Login to your account</h5>
+                </Modal.Header>
+                <form onSubmit={handleSubmit}>
+                    <Modal.Body>
                         {error !== null &&
                             <div className="alert alert-danger" role="alert">
                                 {error}
                             </div>}
-                        <form onSubmit={handleSubmit}>
-                            <div className="modal-body">
-                                <div className="form-group">
-                                    <input type="email"
-                                    className="form-control"
-                                    id="loginEmail"
-                                    name="email"
-                                    placeholder="email@u.rochester.edu"
-                                    autoComplete="username"
-                                    required />
-                                </div>
-                                <div className="form-group">
-                                    <input type="password"
-                                    className="form-control"
-                                    id="loginPassword"
-                                    name="password"
-                                    placeholder="Password"
-                                    autoComplete="current-password"
-                                    required />
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button
-                                    type="submit"
-                                    id="loginButton"
-                                    className="btn btn-primary">
-                                    Login
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                        <div className="form-group">
+                            <input type="email"
+                            className="form-control"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="email@u.rochester.edu"
+                            autoComplete="username"
+                            required />
+                        </div>
+                        <div className="form-group">
+                            <input type="password"
+                            className="form-control"
+                            id="loginPassword"
+                            name="password"
+                            placeholder="Password"
+                            autoComplete="current-password"
+                            required />
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button
+                            onClick={loginModalChange}
+                            type="button"
+                            className="btn btn-secondary"
+                            value={false} >
+                            Close
+                        </button>
+                        <button
+                            type="submit"
+                            id="loginButton"
+                            className="btn btn-primary">
+                            Login
+                        </button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
         );
     }
 }
 
-export default withRouter(Login);
+export default Login;
