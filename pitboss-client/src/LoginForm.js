@@ -90,7 +90,7 @@ class Login extends React.Component {
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <Modal show={loginModalShow}>
+            <Modal show={loginModalShow} centered>
                 <Modal.Header>
                     <h5 className="modal-title" id="loginModalLabel">Login to your account</h5>
                 </Modal.Header>

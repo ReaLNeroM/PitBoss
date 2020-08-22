@@ -119,7 +119,7 @@ class RegisterForm extends React.Component {
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <Modal show={registerModalShow}>
+            <Modal show={registerModalShow} centered>
                 <Modal.Header>
                     <h5 className="modal-title" id="registerModalLabel">Register an account</h5>
                 </Modal.Header>
