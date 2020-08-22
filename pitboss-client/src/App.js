@@ -22,15 +22,17 @@ class App extends Component {
             userId: null
         };
 
-        this.doLogin = this.doLogin.bind(this);
+        this.startSession = this.startSession.bind(this);
     }
 
     componentDidMount(){
-        this.doLogin();
+        this.startSession();
     }
 
-    async doLogin(){
-        fetch(`${this.state.apiUrl}/auth/cookie`, {
+    async startSession(){
+        const { apiUrl } = this.state;
+
+        fetch(`${apiUrl}/auth/start-session`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -38,16 +40,15 @@ class App extends Component {
                 if(!response.ok){
                     throw new Error(response.statusText);
                 }
-                response.json();
+                return response.json();
             })
-            .then(response => response.json())
             .then(data => {
                 this.setState({
                     isLoggedIn: true,
                     userId: data.userId
-                })
+                });
             })
-            .catch(err => console.log(err));
+            .catch(err => {});
     }
 
     onLoginChange(event){
@@ -93,13 +94,15 @@ class App extends Component {
                             render={() =>
                                 <div id="deliveryForm">
                                     <FoodDeliveryForm
-                                        apiUrl={apiUrl} />
+                                        apiUrl={apiUrl}
+                                        userId={userId} />
                                 </div>} />
                         <Route
                             exact path="/my-deliveries"
                             render={() =>
                                 <div id="myDeliveriesPanel">
-                                    <MyDeliveriesPanel />
+                                    <MyDeliveriesPanel
+                                        apiUrl={apiUrl} />
                                 </div>} />
                         <Route
                             render={() =>

@@ -19,7 +19,8 @@ class RegisterForm extends React.Component {
         super(props);
         this.state = {
             apiUrl: props.apiUrl,
-            hasAllergy: false
+            hasAllergy: false,
+            onLoginChange: props.onLoginChange
         };
     }
 
@@ -31,13 +32,15 @@ class RegisterForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const onLoginChange = this.state.onLoginChange.bind(this);
+        const { apiUrl, hasAllergy } = this.state;
+
         const formData = new FormData(event.target);
 
         const schemaVersion = 'user.1';
         const fullName = formData.get('fullName');
         const dormAndRoom = formData.get('dormAndRoom');
         const email = formData.get('email');
-        const hasAllergy = this.state.hasAllergy;
         var allergies = formData.get('allergies');
         if (allergies === null){
             allergies = "";
@@ -62,14 +65,19 @@ class RegisterForm extends React.Component {
                 validateRequest(registerData);
 
         if(validationError === ''){
-            fetch(`${this.state.apiUrl}/auth/register`, {
+            fetch(`${apiUrl}/auth/register`, {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(registerData),
                 headers: {
                     'content-type': 'application/json'
                 }
-            });
+            })
+                .then(response => response.json())
+                .then(data => onLoginChange({
+                    isLoggedIn: true,
+                    userId: data.userId
+                }));
         } else {
             alert(`Error: ${validationError}.`);
         }
@@ -150,8 +158,8 @@ class RegisterForm extends React.Component {
                                         id="allergies"
                                         name="allergies"
                                         placeholder="Allergies"
-                                        disabled={this.state.hasAllergy ? "" : "disabled"}
-                                        required={this.state.hasAllergy ? "required" : ""} />
+                                        disabled={hasAllergy ? "" : "disabled"}
+                                        required={hasAllergy ? "required" : ""} />
                                 </div>
                             </div>
                             <div className="modal-footer">

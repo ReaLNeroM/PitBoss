@@ -2,6 +2,18 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav'
 import { Link, withRouter } from 'react-router-dom'
 
+function toPrettyTabName(tab){
+    if(tab === "all-requests"){
+        return "Deliver!";
+    } else if(tab === "ask-for-delivery"){
+        return "Request";
+    } else if(tab === "my-deliveries"){
+        return "My history"
+    } else {
+        return "";
+    }
+}
+
 class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -39,10 +51,16 @@ class NavBar extends React.Component {
         const { location } = this.props;
         const doLogout = this.doLogout.bind(this);
         const tab = location.pathname.slice(1);
+        const prettyTabName = toPrettyTabName(tab);
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark primary-color">
                 <Link as={Link} className="navbar-brand" to="all-requests">{title}</Link>
+
+                <div className="navbar-toggler" data-toggle="collapse"
+                    aria-expanded="false">
+                    {prettyTabName}
+                </div>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
                     aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +81,7 @@ class NavBar extends React.Component {
                         </li>
                         <li className={"nav-item " + (tab === "my-deliveries" ? "active" : "")}>
                             <Nav.Link className="nav-link" as={Link} href="my-deliveries" to="my-deliveries">
-                                My deliveries
+                                My requests and deliveries
                             </Nav.Link>
                         </li>
                     </ul>

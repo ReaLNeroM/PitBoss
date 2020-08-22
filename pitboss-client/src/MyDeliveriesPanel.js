@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from "axios";
 import './MyDeliveriesPanel.css';
 
 class MyDeliveriesPanel extends React.Component {
@@ -20,26 +19,22 @@ class MyDeliveriesPanel extends React.Component {
     }
 
     async getDeliveries() {
-        axios.get(`${this.state.apiUrl}/my_deliveries`)
+        fetch(`${this.state.apiUrl}/my-deliveries`)
             .then(response => response.json())
-            .then(newMyDeliveries =>
-                this.setState({myDeliveries: newMyDeliveries,
-                               haveMyDeliveriesLoaded: true}))
-            .catch(error => this.setState({error: error, haveMyDeliveriesLoaded: true}));
+            .then(data => {
+                if('message' in data){
+                    throw new Error(data.message);
+                }
+
+                this.setState({myDeliveries: data,
+                               haveMyDeliveriesLoaded: true});
+            })
+            .catch(error => this.setState({error: error, myDeliveries: [], haveMyDeliveriesLoaded: true}));
     }
 
     render() {
         const { error, myDeliveries, haveMyDeliveriesLoaded } = this.state;
-        const myDeliveriesList = myDeliveries.map((req) => (
-            <li key={req._id} className="list-group-item d-flex justify-content-between align-items-center mb-2">
-               {req.foodStation}
-                <div className="d-flex align-items-center float-right">
-                    <div style={{marginRight: "1rem"}}>
-                        {req.time}
-                    </div>
-                </div>
-            </li>
-        ));
+        const myDeliveriesList = myDeliveries.map((delivery, index) => <div />);
 
         return (
             <div id="my-deliveries">

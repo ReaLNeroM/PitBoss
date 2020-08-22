@@ -27,7 +27,7 @@ class RequestsPanel extends React.Component {
     }
 
     async getRequests() {
-        fetch(`${this.state.apiUrl}/requests`, {
+        fetch(`${this.state.apiUrl}/get-requests`, {
             credentials: 'include'
         })
             .then(response => response.json())
@@ -39,7 +39,7 @@ class RequestsPanel extends React.Component {
         const requestsLength = requests.length;
         const requestsList = requests.map((req, index) => (
             <li
-                key={req._id}
+                key={index}
                 className={"list-group-item d-flex justify-content-between align-items-center " + ((index !== requestsLength - 1) ? "mb-2" : "")}>
                {req.foodStation}
                 <div className="d-flex align-items-center float-right">
