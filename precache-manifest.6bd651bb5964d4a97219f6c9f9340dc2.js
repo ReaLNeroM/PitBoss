@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "311987a2eabfb521bb4d8ba04e70c65c",
+    "revision": "9c72102af2a29b39575548d6f368843d",
     "url": "/PitBoss/index.html"
   },
   {
-    "revision": "c8b0a94710b77d54a4cb",
+    "revision": "743f4d12c9ee08053dcc",
     "url": "/PitBoss/static/css/2.11829350.chunk.css"
   },
   {
-    "revision": "fbd5465550d9e78fdb7c",
+    "revision": "6102907fba5ed78c3b09",
     "url": "/PitBoss/static/css/main.cebbd4ba.chunk.css"
   },
   {
-    "revision": "c8b0a94710b77d54a4cb",
-    "url": "/PitBoss/static/js/2.df9fc8ac.chunk.js"
+    "revision": "743f4d12c9ee08053dcc",
+    "url": "/PitBoss/static/js/2.fcd5766a.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/PitBoss/static/js/2.df9fc8ac.chunk.js.LICENSE.txt"
+    "url": "/PitBoss/static/js/2.fcd5766a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fbd5465550d9e78fdb7c",
-    "url": "/PitBoss/static/js/main.fbd9af06.chunk.js"
+    "revision": "6102907fba5ed78c3b09",
+    "url": "/PitBoss/static/js/main.a6bcd955.chunk.js"
   },
   {
     "revision": "df884ea6ddb0bf5e31ee",
