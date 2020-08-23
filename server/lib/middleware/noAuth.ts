@@ -15,30 +15,28 @@ export default (db: DB) => (
   const jwtToken = req.cookies.userId;
 
   if (process.env.TOKEN_SECRET === null) {
-    next(new HttpException(500, 'Secret not defined.'));
+    return next(new HttpException(500, 'Secret not defined.'));
   }
 
   try {
     const data: AuthToken = jwt.verify(
       jwtToken,
-      process.env.TOKEN_SECRET as string) as AuthToken;
-    
+      process.env.TOKEN_SECRET as string,
+    ) as AuthToken;
+
     db.findUserById(data.userId)
       .then((maybeData) => {
         if (maybeData === undefined) {
-          res.status(400);
-          next(new HttpException(400, 'No such user.'));
+          return next(new HttpException(400, 'No such user.'));
         }
 
         res.locals.isAuthenticated = true;
-        res.status(401);
-        next(new HttpException(401, 'Already logged in.'));
+        return next(new HttpException(401, 'Already logged in.'));
       });
-
   } catch (error) {
     // If the signature is incorrect or it's expired, we want to remove
     // the cookie.
-    console.error(`Info: ${error.message}`);
+    console.log(`Info: ${error.message}`);
     return next();
   }
 };

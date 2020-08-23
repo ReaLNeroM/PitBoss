@@ -10,35 +10,36 @@ export default (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   if (!('userId' in req.cookies)) {
-    next(new HttpException(403, 'Not logged in.'));
+    return next(new HttpException(403, 'Not logged in.'));
   }
-  
+
   const jwtToken = req.cookies.userId;
 
   if (process.env.TOKEN_SECRET === null) {
-    next(new HttpException(500, 'JWT secret not defined.'));
+    return next(new HttpException(500, 'JWT secret not defined.'));
   }
-  
+
   try {
     const data: AuthToken = jwt.verify(
       jwtToken,
-      process.env.TOKEN_SECRET as string) as AuthToken;
+      process.env.TOKEN_SECRET as string,
+    ) as AuthToken;
 
     db.findUserById(data.userId)
-    .then((maybeData: DBAccount | Error) => {
-      if (maybeData instanceof Error) {
-        next(new HttpException(400, 'No such user.'));
-      }
+      .then((maybeData: DBAccount | Error) => {
+        if (maybeData instanceof Error) {
+          return next(new HttpException(400, 'No such user.'));
+        }
 
-      const account: DBAccount = maybeData as DBAccount;
-      res.locals.sessionDetails = {
-        userId: account.userId,
-        dormAndRoom: account.dormAndRoom
-      } as SessionDetails;
-      res.locals.isAuthenticated = true;
-    })
-    .then(() => next());
+        const account: DBAccount = maybeData as DBAccount;
+        res.locals.sessionDetails = {
+          userId: account.userId,
+          dormAndRoom: account.dormAndRoom,
+        } as SessionDetails;
+        res.locals.isAuthenticated = true;
+      })
+      .then(() => next());
   } catch (error) {
-    next(new HttpException(401, error.message));
+    return next(new HttpException(401, error.message));
   }
 };

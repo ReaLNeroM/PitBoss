@@ -12,7 +12,7 @@ export default (db: DB) => (
       if (requestsOrError instanceof Error) {
         const error = requestsOrError as Error;
 
-        next(new HttpException(500, error.message));
+        return next(new HttpException(500, error.message));
       }
 
       const requests = requestsOrError as Array<DBRequest>;

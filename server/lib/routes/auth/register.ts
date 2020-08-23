@@ -17,7 +17,8 @@ export default (db: DB, configFlags: ConfigFlags) => (
   const registrationJson = req.body as Registration;
 
   if (!validateRegistration(registrationJson)) {
-    next(new HttpException(400, 'Something went wrong with the registration form. Please correct the form and try again.'));
+    return next(new HttpException(400, 'Something went wrong with the registration form. Please correct the form and try again.'));
+    return;
   }
 
   const password = registrationJson.password.toString();
@@ -41,13 +42,13 @@ export default (db: DB, configFlags: ConfigFlags) => (
       if (existsOrError instanceof Error) {
         const error = existsOrError as Error;
 
-        next(new HttpException(500, error.message));
+        return next(new HttpException(500, error.message));
       }
 
       const exists: boolean = existsOrError as boolean;
 
       if (exists) {
-        next(new HttpException(409, 'Email already in use!'));
+        return next(new HttpException(409, 'Email already in use!'));
       }
 
       db.insertAccount(accountData)

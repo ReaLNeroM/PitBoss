@@ -34,18 +34,18 @@ export const login = (
   configFlags: ConfigFlags,
 ): void => {
   if (res.locals.isAuthenticated) {
-    next(new HttpException(403, 'You\'re already logged in!'));
+    return next(new HttpException(403, 'You\'re already logged in!'));
   }
 
   if (!validateLogin(loginJson)) {
-    next(new HttpException(400, 'Something went wrong with the login form. Please correct the form and try again.'));
+    return next(new HttpException(400, 'Something went wrong with the login form. Please correct the form and try again.'));
   }
 
   db.findUserByEmail(loginJson.email)
     .then((accountOrError: DBAccount | Error) => {
       if (accountOrError instanceof Error) {
         const error = accountOrError as Error;
-        next(new HttpException(500, error.message));
+        return next(new HttpException(500, error.message));
       }
 
       const account = accountOrError as DBAccount;
@@ -56,11 +56,11 @@ export const login = (
         )
         .then((authenticated: boolean) => {
           if (!authenticated) {
-            next(new HttpException(401, 'Email or password is incorrect.'));
+            return next(new HttpException(401, 'Email or password is incorrect.'));
           }
 
           if (process.env.TOKEN_SECRET === undefined) {
-            next(new HttpException(500, 'JWT secret not defined.'));
+            return next(new HttpException(500, 'JWT secret not defined.'));
           }
 
           const authToken: AuthToken = {

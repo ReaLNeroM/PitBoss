@@ -11,7 +11,7 @@ export default (db: DB) => (
   const request = req.body as Request;
 
   if (!validateRequest(req.body as Request)) {
-    next(new HttpException(422, 'Form doesn\'t have correct format.'));
+    return next(new HttpException(422, 'Form doesn\'t have correct format.'));
   }
 
   const dbRequest: DBRequest = {
@@ -25,7 +25,7 @@ export default (db: DB) => (
   };
 
   db.insertRequest(dbRequest)
-    .then(data => {
+    .then((data) => {
       res.json({
         message: 'Request submitted successfully!',
       });
