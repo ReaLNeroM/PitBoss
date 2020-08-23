@@ -14,21 +14,9 @@ class FoodDeliveryForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            apiUrl: props.apiUrl,
             error: null,
             foodStation: FoodStation.None,
-            isLoggedIn: props.isLoggedIn,
-            userId: props.userId
         };
-    }
-
-    componentDidUpdate(prevProps) {
-        const { isLoggedIn: oldIsLoggedIn, userId: oldUserId } = prevProps;
-        const { isLoggedIn, userId } = this.props;
-
-        if (isLoggedIn !== oldIsLoggedIn || userId !== oldUserId) {
-            this.setState({ isLoggedIn: isLoggedIn, userId: oldUserId });
-        }
     }
 
     foodStationChanged(event) {
@@ -39,8 +27,7 @@ class FoodDeliveryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { apiUrl, userId, isLoggedIn } = this.state;
-        const { sendInfoNotification } = this.props;
+        const { apiUrl, userId, isLoggedIn, sendInfoNotification } = this.props;
         const formData = new FormData(event.target);
 
         const schemaVersion = "request.1";
