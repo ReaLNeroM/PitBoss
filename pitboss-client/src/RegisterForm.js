@@ -19,22 +19,9 @@ class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            apiUrl: props.apiUrl,
             hasAllergy: false,
             error: null,
-            onLoginChange: props.onLoginChange,
-            registerModalShow: props.registerModalShow,
-            registerModalChange: props.registerModalChange
         };
-    }
-
-    componentDidUpdate(prevProps) {
-        const { registerModalShow: oldRegisterModalShow } = prevProps;
-        const { registerModalShow } = this.props;
-
-        if (registerModalShow !== oldRegisterModalShow) {
-            this.setState({ registerModalShow: registerModalShow });
-        }
     }
 
     allergyChanged(event) {
@@ -45,7 +32,8 @@ class RegisterForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { apiUrl, hasAllergy, registerModalChange, onLoginChange } = this.state;
+        const { hasAllergy } = this.state;
+        const { apiUrl, registerModalChange, onLoginChange } = this.props;
 
         const formData = new FormData(event.target);
 
@@ -91,7 +79,6 @@ class RegisterForm extends React.Component {
                             registerModalChange(false);
                             this.setState({
                                 error: null,
-                                registerModalShow: false
                             });
                             console.log(`Logged in as ${data.userId}`);
                             onLoginChange({
@@ -113,13 +100,17 @@ class RegisterForm extends React.Component {
     }
 
     render() {
-        const { registerModalShow, hasAllergy, error } = this.state;
-        const registerModalChange = this.state.registerModalChange.bind(this);
+        const { hasAllergy, error } = this.state;
+        const { registerModalShow, registerModalChange } = this.props;
+        const registerModalHide = () => registerModalChange(false);
         const allergyChanged = this.allergyChanged.bind(this);
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <Modal show={registerModalShow} centered>
+            <Modal
+                show={registerModalShow}
+                onHide={registerModalHide}
+                centered>
                 <Modal.Header>
                     <h5 className="modal-title" id="registerModalLabel">Register an account</h5>
                 </Modal.Header>
@@ -194,7 +185,7 @@ class RegisterForm extends React.Component {
                     <Modal.Footer>
                         <button
                             type="button"
-                            onClick={registerModalChange}
+                            onClick={registerModalHide}
                             className="btn btn-secondary"
                             data-dismiss="modal">
                             Close

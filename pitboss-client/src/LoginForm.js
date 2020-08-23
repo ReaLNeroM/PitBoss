@@ -15,27 +15,14 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            apiUrl: props.apiUrl,
             error: null,
-            onLoginChange: props.onLoginChange,
-            loginModalShow: props.loginModalShow,
-            loginModalChange: props.loginModalChange
         };
-    }
-
-    componentDidUpdate(prevProps) {
-        const { loginModalShow: oldLoginModalShow } = prevProps;
-        const { loginModalShow } = this.props;
-
-        if (loginModalShow !== oldLoginModalShow) {
-            this.setState({ loginModalShow: loginModalShow });
-        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const { onLoginChange } = this.state;
-        const loginModalChange = this.state.loginModalChange.bind(this);
+        const { apiUrl, onLoginChange } = this.props;
+        const loginModalChange = this.props.loginModalChange.bind(this);
         const formData = new FormData(event.target);
 
         const email = formData.get('email');
@@ -49,7 +36,7 @@ class Login extends React.Component {
         const validationError = validateRequest(loginData);
 
         if(validationError === ''){
-            fetch(`${this.state.apiUrl}/auth/login`, {
+            fetch(`${apiUrl}/auth/login`, {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(loginData),
@@ -63,7 +50,6 @@ class Login extends React.Component {
                             loginModalChange(false);
                             this.setState({
                                 error: null,
-                                registerModalShow: false
                             });
                             console.log(`Logged in as ${data.userId}`);
                             onLoginChange({
@@ -85,12 +71,16 @@ class Login extends React.Component {
     }
 
     render() {
-        const { loginModalShow, error } = this.state;
-        const loginModalChange = this.state.loginModalChange.bind(this);
+        const { error } = this.state;
+        const { loginModalShow, loginModalChange } = this.props;
+        const handleHide = () => loginModalChange(false);
         const handleSubmit = this.handleSubmit.bind(this);
 
         return (
-            <Modal show={loginModalShow} centered>
+            <Modal
+                show={loginModalShow}
+                onHide={handleHide}
+                centered>
                 <Modal.Header>
                     <h5 className="modal-title" id="loginModalLabel">Login to your account</h5>
                 </Modal.Header>
