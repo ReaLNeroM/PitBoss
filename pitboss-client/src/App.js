@@ -7,6 +7,9 @@ import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 import {
   HashRouter as Router,
   Route,
@@ -53,7 +56,17 @@ class App extends Component {
             .catch(err => {});
     }
 
+    sendInfoNotification(event){
+        NotificationManager.info(event);
+    }
+
     onLoginChange(event){
+        if(event.isLoggedIn === true){
+            this.sendInfoNotification('Logged in!');
+        } else {
+            this.sendInfoNotification('Logged out.');
+        }
+
         this.setState({
             isLoggedIn: event.isLoggedIn,
             userId: event.userId
@@ -92,12 +105,15 @@ class App extends Component {
         const { isLoggedIn, userId, apiUrl, loginModalShow, registerModalShow } = this.state;
         const onLoginChange = this.onLoginChange.bind(this);
         const loginModalChange = this.loginModalChange.bind(this);
+        const sendInfoNotification = this.sendInfoNotification.bind(this);
         const registerModalChange = this.registerModalChange.bind(this);
 
         return (
             <div id="App" className="container">
                 <Router basename={process.env.PUBLIC_URL}
                         hashType="noslash">
+                    <NotificationContainer />
+
                     <div id="navBar">
                         <NavBar
                             apiUrl={apiUrl}
@@ -107,17 +123,19 @@ class App extends Component {
                             loginModalChange={loginModalChange}
                             registerModalChange={registerModalChange} />
                     </div>
+
+
                     <RegisterForm
                         apiUrl={apiUrl}
                         onLoginChange={onLoginChange}
                         registerModalShow={registerModalShow}
                         registerModalChange={registerModalChange} />
-
                     <LoginForm
                         apiUrl={apiUrl}
                         onLoginChange={onLoginChange}
                         loginModalShow={loginModalShow}
                         loginModalChange={loginModalChange} />
+
                     <Switch>
                         <Route exact path="/" >
                             <RequestsPanel
@@ -135,7 +153,8 @@ class App extends Component {
                                     <FoodDeliveryForm
                                         apiUrl={apiUrl}
                                         isLoggedIn={isLoggedIn}
-                                        userId={userId} />
+                                        userId={userId}
+                                        sendInfoNotification={sendInfoNotification} />
                                 </div>} />
                         <Route
                             exact path="/my-deliveries"

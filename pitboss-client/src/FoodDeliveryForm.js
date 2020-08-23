@@ -40,6 +40,7 @@ class FoodDeliveryForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const { apiUrl, userId, isLoggedIn } = this.state;
+        const { sendInfoNotification } = this.props;
         const formData = new FormData(event.target);
 
         const schemaVersion = "request.1";
@@ -66,7 +67,10 @@ class FoodDeliveryForm extends React.Component {
                 }
             })
                 .then(response => response.json())
-                .then(data => this.props.history.push('/all-requests'));
+                .then(data => {
+                    sendInfoNotification('Request submitted!');
+                    this.props.history.push('/all-requests')
+                });
         } else {
             this.setState({
                error: `Error: ${validationError}.`
