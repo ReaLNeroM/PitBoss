@@ -38,6 +38,8 @@ class FoodDeliveryForm extends React.Component {
     const request = {
       schemaVersion,
       userId,
+      foodStation,
+      orderNumber,
     };
     const validationError =
       isLoggedIn !== true ? "You must be logged in" : validateRequest(request);
