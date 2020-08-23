@@ -64,7 +64,9 @@ class FoodDeliveryForm extends React.Component {
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(this.props.history.push('/all-requests'));
+            })
+                .then(response => response.json())
+                .then(data => this.props.history.push('/all-requests'));
         } else {
             this.setState({
                error: `Error: ${validationError}.`
