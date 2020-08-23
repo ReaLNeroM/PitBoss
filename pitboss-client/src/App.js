@@ -144,12 +144,22 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/">
-              <RequestsPanel apiUrl={apiUrl} />
+              <RequestsPanel
+                apiUrl={apiUrl}
+                isLoggedIn={isLoggedIn}
+                sendInfoNotification={sendInfoNotification}
+                userId={userId} />
             </Route>
             <Route
               exact
               path="/all-requests"
-              render={() => <RequestsPanel apiUrl={apiUrl} />}
+              render={() => (
+                <RequestsPanel
+                  apiUrl={apiUrl}
+                  isLoggedIn={isLoggedIn}
+                  sendInfoNotification={sendInfoNotification}
+                  userId={userId} />
+              )}
             />
             <Route
               exact

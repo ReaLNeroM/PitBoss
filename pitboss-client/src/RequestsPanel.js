@@ -14,7 +14,7 @@ class RequestsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiUrl: props.apiUrl,
+      error: null,
       requests: [],
       haveRequestsLoaded: false,
     };
@@ -27,7 +27,9 @@ class RequestsPanel extends React.Component {
   }
 
   async getRequests() {
-    fetch(`${this.state.apiUrl}/get-requests`, {
+    const { apiUrl } = this.props;
+
+    fetch(`${apiUrl}/get-requests`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -36,8 +38,60 @@ class RequestsPanel extends React.Component {
       );
   }
 
+  async handleDelivery(event) {
+    const { apiUrl, isLoggedIn, userId, sendInfoNotification } = this.props;
+
+    if (isLoggedIn !== true) {
+      this.setState({
+        error: `Error: Not logged in.`,
+      });
+      return;
+    }
+
+    const request = {
+      deliverer: userId,
+      requestId: event.target.value,
+      status: "requested",
+    };
+
+    fetch(`${apiUrl}/request-update`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(request),
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((response) => {
+        if (!response.ok) {
+          response
+            .json()
+            .then((data) => {
+              throw new Error(`Error: ${data.message}`);
+            })
+            .catch((error) =>
+              this.setState({
+                error,
+              })
+            );
+        } else {
+          response
+            .json()
+            .catch((error) =>
+              this.setState({
+                error,
+              })
+            )
+            .then((data) => {
+              sendInfoNotification("Delivery requested!");
+              this.props.history.push("/my-deliveries");
+            });
+        }
+      });
+  }
+
   render() {
     const { requests, haveRequestsLoaded } = this.state;
+    const handleDelivery = this.handleDelivery.bind(this);
     const requestsLength = requests.length;
     const requestsList = requests.map((req, index) => (
       <li
@@ -53,7 +107,10 @@ class RequestsPanel extends React.Component {
           {toLocalDelta(req.created)}
         </div>
         <div className="d-flex align-items-center">
-          <button className="btn btn-dark">Deliver!</button>
+          <button
+            value={req.requestId}
+            onClick={handleDelivery}
+            className="btn btn-dark">Deliver!</button>
         </div>
       </li>
     ));

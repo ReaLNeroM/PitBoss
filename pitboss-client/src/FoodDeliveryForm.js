@@ -42,45 +42,46 @@ class FoodDeliveryForm extends React.Component {
     const validationError =
       isLoggedIn !== true ? "You must be logged in" : validateRequest(request);
 
-    if (validationError === "") {
-      fetch(`${apiUrl}/create-request`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(request),
-        headers: {
-          "content-type": "application/json",
-        },
-      }).then((response) => {
-        if (!response.ok) {
-          response
-            .json()
-            .then((data) => {
-              throw new Error(`Error: ${data.message}`);
-            })
-            .catch((error) =>
-              this.setState({
-                error,
-              })
-            );
-        } else {
-          response
-            .json()
-            .catch((error) =>
-              this.setState({
-                error,
-              })
-            )
-            .then((data) => {
-              sendInfoNotification("Request submitted!");
-              this.props.history.push("/all-requests");
-            });
-        }
-      });
-    } else {
+    if (validationError !== "") {
       this.setState({
         error: `Error: ${validationError}.`,
       });
+      return;
     }
+
+    fetch(`${apiUrl}/create-request`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(request),
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((response) => {
+      if (!response.ok) {
+        response
+          .json()
+          .then((data) => {
+            throw new Error(`Error: ${data.message}`);
+          })
+          .catch((error) =>
+            this.setState({
+              error,
+            })
+          );
+      } else {
+        response
+          .json()
+          .catch((error) =>
+            this.setState({
+              error,
+            })
+          )
+          .then((data) => {
+            sendInfoNotification("Request submitted!");
+            this.props.history.push("/all-requests");
+          });
+      }
+    });
   }
 
   render() {
