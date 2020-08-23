@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { Link, withRouter } from 'react-router-dom';
 
 function toPrettyTabName(tab){
-    if(tab === "all-requests"){
+    if(tab === "all-requests" || tab === ""){
         return "Deliver!";
     } else if(tab === "ask-for-delivery"){
         return "Request";
