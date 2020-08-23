@@ -1,22 +1,28 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
+        "allergies": {
+            "type": "string"
+        },
         "dormAndRoom": {
             "type": "string"
         },
         "email": {
             "type": "string"
         },
-        "foodStation": {
-            "type": "string"
-        },
         "fullName": {
             "type": "string"
         },
-        "orderNumber": {
+        "hasAllergy": {
+            "type": "boolean"
+        },
+        "password": {
+            "type": "string"
+        },
+        "schemaVersion": {
             "type": "string"
         }
     },
-    "type": "object"
+    "required": ["dormAndRoom", "email", "fullName", "hasAllergy", "password", "schemaVersion"]
 }
 
