@@ -54,7 +54,7 @@ class RequestsPanel extends React.Component {
       status: "requested",
     };
 
-    fetch(`${apiUrl}/request-update`, {
+    fetch(`${apiUrl}/deliver-request`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(request),

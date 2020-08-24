@@ -7,7 +7,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import NavBar from "./NavBar";
 import FoodDeliveryForm from "./FoodDeliveryForm";
-import MyDeliveriesPanel from "./MyDeliveriesPanel";
+import MyHistoryPanel from "./MyHistoryPanel";
 import RequestsPanel from "./RequestsPanel";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
@@ -179,8 +179,8 @@ class App extends Component {
               exact
               path="/my-deliveries"
               render={() => (
-                <div id="myDeliveriesPanel">
-                  <MyDeliveriesPanel apiUrl={apiUrl} />
+                <div id="myHistoryPanel">
+                  <MyHistoryPanel apiUrl={apiUrl} />
                 </div>
               )}
             />
