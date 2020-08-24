@@ -1,16 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
-        "email": {
-            "type": "string"
-        },
-        "password": {
+        "requestId": {
             "type": "string"
         }
     },
     "required": [
-        "email",
-        "password"
+        "requestId"
     ],
     "type": "object"
 }

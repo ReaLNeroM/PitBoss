@@ -1,3 +1,5 @@
+import RequestStatus from './requestStatus';
+
 export default interface DBRequest {
   schemaVersion: string,
   requestId: string,
@@ -5,6 +7,6 @@ export default interface DBRequest {
   foodStation: string,
   orderNumber: string,
   created: Date,
-  status: string,
+  status: RequestStatus,
   deliverer?: string
 }

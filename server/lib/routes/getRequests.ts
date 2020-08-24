@@ -3,11 +3,12 @@ import DB from '../db/db';
 import DBRequest from '../model/dbRequest';
 import PublicRequest from '../model/publicRequest';
 import HttpException from '../exceptions/HttpException';
+import RequestStatus from '../model/requestStatus';
 
 export default (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
-  db.getRequests()
+  db.getOpenRequests()
     .then((requestsOrError: (Array<DBRequest> | Error)) => {
       if (requestsOrError instanceof Error) {
         const error = requestsOrError as Error;
@@ -22,12 +23,12 @@ export default (db: DB) => (
             requestId: r.requestId,
             foodStation: r.foodStation,
             created: r.created,
-            isOpen: r.status === 'requested',
+            isOpen: r.status === RequestStatus.Requested,
           } as PublicRequest;
 
           return publicRequest;
         });
 
-      res.send(publicRequests);
+      res.json(publicRequests);
     });
 };

@@ -2,6 +2,7 @@ import * as express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import DB from '../db/db';
 import DBRequest from '../model/dbRequest';
+import RequestStatus from '../model/requestStatus';
 import Request, { validateRequest } from '../model/request';
 import HttpException from '../exceptions/HttpException';
 
@@ -21,11 +22,16 @@ export default (db: DB) => (
     foodStation: request.foodStation.toString().trim(),
     orderNumber: request.orderNumber.toString().trim(),
     created: new Date(),
-    status: 'requested',
+    status: RequestStatus.Requested,
   };
 
   db.insertRequest(dbRequest)
-    .then((data) => {
+    .then((data: Error | undefined) => {
+      if(data instanceof Error){
+        const error = data as Error;
+        return next(new HttpException(500, error.message));
+      }
+
       res.json({
         message: 'Request submitted successfully!',
       });

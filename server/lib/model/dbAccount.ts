@@ -4,6 +4,7 @@ export default interface DBAccount {
   fullName: string,
   dormAndRoom: string,
   email: string,
+  // TODO(maksimovski): Add phone number.
   hashedPassword: string
   hasAllergy: boolean,
   allergies?: string
