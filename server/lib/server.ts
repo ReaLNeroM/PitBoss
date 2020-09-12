@@ -1,7 +1,5 @@
 import { isUndefined } from 'util';
 import express = require('express');
-import fs from 'fs';
-import https from 'https';
 
 import authenticatedMiddleware from './middleware/auth';
 import { ConfigFlags, devOrProductionFlags } from './config/configFlags';
@@ -28,11 +26,6 @@ const helmet = require('helmet');
 const db: DB = new MongoDB(monk(process.env.MONGO_URI)) as DB;
 
 const configFlags: ConfigFlags = devOrProductionFlags();
-const options = {
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.crt')
-};
-
 const app = express();
 app.use(helmet());
 app.use(cookieParser());
@@ -64,9 +57,6 @@ app.use((err: HttpException, req: express.Request, res: express.Response, next: 
 
 
 const port: number = Number(process.env.PORT) || 8443;
-https.createServer({
-  key: options.key,
-  cert: options.cert
-}, app).listen(port, () => {
-  console.log(`Listening on https://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}`);
 });
