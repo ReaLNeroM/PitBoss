@@ -1,3 +1,5 @@
+const env = require('dotenv').config();
+
 import { isUndefined } from 'util';
 import express = require('express');
 
