@@ -11,14 +11,13 @@ import HttpException from '../../exceptions/HttpException';
 
 const SALT_ROUNDS = 10;
 
-export default (db: DB, configFlags: ConfigFlags) => (
+export const registerRoute = (db: DB, configFlags: ConfigFlags) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   const registrationJson = req.body as Registration;
 
   if (!validateRegistration(registrationJson)) {
     return next(new HttpException(400, 'Something went wrong with the registration form. Please correct the form and try again.'));
-    return;
   }
 
   const password = registrationJson.password.toString();
@@ -65,3 +64,5 @@ export default (db: DB, configFlags: ConfigFlags) => (
         });
     });
 };
+
+export default registerRoute;

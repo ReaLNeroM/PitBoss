@@ -4,8 +4,9 @@ import DBAccount from '../model/dbAccount';
 import DBRequest from '../model/dbRequest';
 import { tempMyDelivery, tempMyRequest } from '../model/historyEntry';
 
-export default class MongoDB implements DB {
+export class MongoDB implements DB {
   requests: monk.ICollection
+
   accounts: monk.ICollection
 
   constructor(mongoInstance: monk.IMonkManager) {
@@ -24,9 +25,7 @@ export default class MongoDB implements DB {
         }
 
         return obtainedAccounts[0];
-      }).catch(error => {
-        return error;
-      });
+      }).catch((error) => error);
   }
 
   findUserByEmail(email: string): Promise<DBAccount | Error> {
@@ -40,9 +39,7 @@ export default class MongoDB implements DB {
         }
 
         return obtainedAccounts[0];
-      }).catch(error => {
-        return error;
-      });
+      }).catch((error) => error);
   }
 
   existsUserWithEmail(email: string): Promise<boolean | Error> {
@@ -54,49 +51,41 @@ export default class MongoDB implements DB {
         }
 
         return obtainedAccounts.length === 1;
-      }).catch(error => {
-        return error;
-      });
+      }).catch((error) => error);
   }
 
   insertAccount(account: DBAccount): Promise<Error | undefined> {
-    return this.accounts.insert(account).catch(error => {
-      return error;
-    });
+    return this.accounts.insert(account).catch((error) => error);
   }
 
   getOpenRequests(): Promise<Array<DBRequest> | Error> {
-    return this.requests.find().catch(error => {
-      return error;
-    });
+    return this.requests.find().catch((error) => error);
   }
 
   getRequestById(requestId: string): Promise<DBRequest | Error> {
     return this.requests
       .find({ requestId })
       .then((obtainedRequests: Array<DBRequest>) => {
-        if(obtainedRequests.length === 0){
+        if (obtainedRequests.length === 0) {
           return new Error('No such request found.');
-        } else if(obtainedRequests.length > 1){
+        } if (obtainedRequests.length > 1) {
           return new Error('More than one request with the same id. Please report this bug!');
         }
 
         return obtainedRequests[0];
-      }).catch(error => {
-        return error;
-      });
+      }).catch((error) => error);
   }
 
   async getDeliveriesFromUser(userId: string): Promise<Array<tempMyDelivery> | Error> {
     const deliveries: Array<DBRequest> = await this.requests.find({ deliverer: userId });
 
-    const senders: Array<DBAccount | Error> = await Promise.all(deliveries.map((delivery: DBRequest) =>
-      this.findUserById(delivery.sender)
-    ));
+    const senders: Array<DBAccount | Error> = await Promise.all(
+      deliveries.map((delivery: DBRequest) => this.findUserById(delivery.sender)),
+    );
 
     const result: Array<tempMyDelivery> = [];
-    for (var i = 0; i < deliveries.length; i++){
-      if(senders[i] instanceof Error){
+    for (let i = 0; i < deliveries.length; i += 1) {
+      if (senders[i] instanceof Error) {
         return senders[i] as Error;
       }
       result.push({
@@ -113,19 +102,20 @@ export default class MongoDB implements DB {
 
     const deliverers: Array<DBAccount | null | Error> = await Promise.all(
       requests.map((request: DBRequest) => {
-        if(request.deliverer){
+        if (request.deliverer) {
           return this.findUserById(request.deliverer);
         }
 
         return null;
-      }));
+      }),
+    );
 
     const result: Array<tempMyRequest> = [];
-    for (var i = 0; i < requests.length; i++){
-      if(deliverers[i] instanceof Error){
+    for (let i = 0; i < requests.length; i += 1) {
+      if (deliverers[i] instanceof Error) {
         return deliverers[i] as Error;
       }
-      if(deliverers[i]){
+      if (deliverers[i]) {
         result.push({
           request: requests[i],
           deliverer: deliverers[i],
@@ -141,19 +131,17 @@ export default class MongoDB implements DB {
   }
 
   insertRequest(request: DBRequest): Promise<Error | undefined> {
-    return this.requests.insert(request).catch(error => {
-      return error
-    });
+    return this.requests.insert(request).catch((error) => error);
   }
 
   updateRequest(request: DBRequest): Promise<Error | undefined> {
     return this.requests.remove(
       { requestId: request.requestId },
-      { justOne: true }
-    ).then(_ => {
-      return this.requests.insert(request);
-    }).catch(error => {
-      return error;
-    });
+      { justOne: true },
+    )
+      .then(() => this.requests.insert(request))
+      .catch((error) => error);
   }
 }
+
+export default MongoDB;

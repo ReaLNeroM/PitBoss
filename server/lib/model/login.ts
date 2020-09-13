@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 
 const loginSchema = require('../schema/login');
 
-export default interface Login {
+export interface Login {
   email: string,
   password: string
 }
@@ -16,3 +16,5 @@ export function validateLogin(json: Login): boolean {
   ) && json.email.toString().trim() !== ''
          && json.password.toString() !== '' && json.password.toString().length > 6;
 }
+
+export default Login;

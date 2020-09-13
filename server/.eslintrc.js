@@ -15,5 +15,18 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'no-undef': 'off',
+    'import/extensions': 'off',
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', 'src/'],
+      },
+    },
+  }
+
 };

@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 
 const requestSchema = require('../schema/request');
 
-export default interface Request {
+export interface Request {
   schemaVersion: string,
   foodStation: string,
   orderNumber: string
@@ -19,3 +19,5 @@ export function validateRequest(json: Request): boolean {
          && json.foodStation.toString().trim() !== ''
          && json.orderNumber.toString().trim() !== '';
 }
+
+export default Request;

@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 
 const registrationSchema = require('../schema/registration');
 
-export default interface Registration {
+export interface Registration {
   schemaVersion: string,
   fullName: string,
   dormAndRoom: string,
@@ -25,3 +25,5 @@ export function validateRegistration(json: Registration): boolean {
          && json.email.toString().trim() !== ''
          && json.password.toString() !== '' && json.password.toString().length > 6;
 }
+
+export default Registration;

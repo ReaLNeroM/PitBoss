@@ -1,4 +1,6 @@
-export default interface sessionDetails {
+export interface sessionDetails {
   userId: string,
   dormAndRoom: string
 }
+
+export default sessionDetails;

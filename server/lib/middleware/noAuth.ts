@@ -4,7 +4,7 @@ import AuthToken from '../model/authToken';
 import DB from '../db/db';
 import HttpException from '../exceptions/HttpException';
 
-export default (db: DB) => (
+export const noAuthRoute = (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   if (!('userId' in req.cookies)) {
@@ -40,3 +40,5 @@ export default (db: DB) => (
     return next();
   }
 };
+
+export default noAuthRoute;

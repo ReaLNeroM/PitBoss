@@ -6,7 +6,7 @@ import HttpException from '../exceptions/HttpException';
 import DBAccount from '../model/dbAccount';
 import SessionDetails from '../model/sessionDetails';
 
-export default (db: DB) => (
+export const authRoute = (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   if (!('userId' in req.cookies)) {
@@ -43,3 +43,5 @@ export default (db: DB) => (
     return next(new HttpException(401, error.message));
   }
 };
+
+export default authRoute;

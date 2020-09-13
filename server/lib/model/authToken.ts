@@ -1,3 +1,5 @@
-export default interface AuthToken {
+export interface AuthToken {
   userId: string
 }
+
+export default AuthToken;

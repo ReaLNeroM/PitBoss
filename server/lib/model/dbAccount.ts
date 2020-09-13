@@ -1,4 +1,4 @@
-export default interface DBAccount {
+export interface DBAccount {
   schemaVersion: string,
   userId: string,
   fullName: string,
@@ -9,3 +9,5 @@ export default interface DBAccount {
   hasAllergy: boolean,
   allergies?: string
 }
+
+export default DBAccount;

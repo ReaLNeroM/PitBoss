@@ -8,23 +8,6 @@ import { ConfigFlags } from '../../config/configFlags';
 import AuthToken from '../../model/authToken';
 import HttpException from '../../exceptions/HttpException';
 
-export default (db: DB, configFlags: ConfigFlags) => (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction,
-): void => {
-  const loginData = req.body as Login;
-
-  login(
-    req,
-    res,
-    next,
-    loginData,
-    db,
-    configFlags,
-  );
-};
-
 export const login = (
   req: express.Request,
   res: express.Response,
@@ -91,3 +74,22 @@ export const login = (
         });
     });
 };
+
+export const loginRoute = (db: DB, configFlags: ConfigFlags) => (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+): void => {
+  const loginData = req.body as Login;
+
+  login(
+    req,
+    res,
+    next,
+    loginData,
+    db,
+    configFlags,
+  );
+};
+
+export default loginRoute;

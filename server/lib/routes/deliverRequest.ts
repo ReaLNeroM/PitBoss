@@ -6,7 +6,7 @@ import DeliveryOffer, { validateDeliveryOffer } from '../model/deliveryOffer';
 import HttpException from '../exceptions/HttpException';
 import DBAccount from '../model/dbAccount';
 
-export default (db: DB) => (
+export const deliverRequestRoute = (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   const offer = req.body as DeliveryOffer;
@@ -19,20 +19,20 @@ export default (db: DB) => (
 
   db
     .getRequestById(offer.requestId).then((requestOrError: DBRequest | Error) => {
-      if(requestOrError instanceof Error){
+      if (requestOrError instanceof Error) {
         const error = requestOrError as Error;
         return next(new HttpException(500, error.message));
       }
 
       const dbRequest = requestOrError as DBRequest;
-      if(dbRequest.status !== RequestStatus.Requested){
+      if (dbRequest.status !== RequestStatus.Requested) {
         return next(new HttpException(403, 'Request is already taken.'));
       }
-      if(dbRequest.sender === res.locals.sessionDetails.userId){
+      if (dbRequest.sender === res.locals.sessionDetails.userId) {
         return next(new HttpException(403, 'This is your own request.'));
       }
-      db.findUserById(dbRequest.sender).then((accountOrError: DBAccount | Error) => {
-        if(accountOrError instanceof Error){
+      return db.findUserById(dbRequest.sender).then((accountOrError: DBAccount | Error) => {
+        if (accountOrError instanceof Error) {
           const error = accountOrError as Error;
           return next(new HttpException(500, error.message));
         }
@@ -51,16 +51,16 @@ export default (db: DB) => (
 
           deliverer: res.locals.sessionDetails.userId,
           timeDelivererFound: updateTime,
-        }
+        };
 
-        db.updateRequest(newRequest)
+        return db.updateRequest(newRequest)
           .then((data: Error | undefined) => {
-            if(data instanceof Error){
+            if (data instanceof Error) {
               const error = data as Error;
               return next(new HttpException(500, error.message));
             }
 
-            res.json({
+            return res.json({
               deliveryInfo: {
                 foodStation: dbRequest.foodStation,
                 orderNumber: dbRequest.orderNumber,
@@ -72,7 +72,8 @@ export default (db: DB) => (
               message: 'Thanks for delivering!',
             });
           });
-      })
+      });
     });
-
 };
+
+export default deliverRequestRoute;

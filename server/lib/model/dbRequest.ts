@@ -1,6 +1,6 @@
 import RequestStatus from './requestStatus';
 
-export default interface DBRequest {
+export interface DBRequest {
   schemaVersion: string,
   requestId: string,
   sender: string,
@@ -22,3 +22,5 @@ export default interface DBRequest {
   timeFailed?: Date,
   failReason?: string
 }
+
+export default DBRequest;

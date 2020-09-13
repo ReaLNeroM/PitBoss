@@ -6,7 +6,7 @@ import RequestStatus from '../model/requestStatus';
 import Request, { validateRequest } from '../model/request';
 import HttpException from '../exceptions/HttpException';
 
-export default (db: DB) => (
+export const createRequestRoute = (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   const request = req.body as Request;
@@ -24,12 +24,12 @@ export default (db: DB) => (
     orderNumber: request.orderNumber.toString().trim(),
     created: updateTime,
     status: RequestStatus.Requested,
-    lastUpdate: updateTime
+    lastUpdate: updateTime,
   };
 
   db.insertRequest(dbRequest)
     .then((data: Error | undefined) => {
-      if(data instanceof Error){
+      if (data instanceof Error) {
         const error = data as Error;
         return next(new HttpException(500, error.message));
       }
@@ -39,3 +39,5 @@ export default (db: DB) => (
       });
     });
 };
+
+export default createRequestRoute;

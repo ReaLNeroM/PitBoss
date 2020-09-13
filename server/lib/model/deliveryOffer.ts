@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 
 const deliveryOfferSchema = require('../schema/deliveryOffer');
 
-export default interface DeliveryOffer {
+export interface DeliveryOffer {
   requestId: string
 }
 
@@ -15,3 +15,5 @@ export function validateDeliveryOffer(json: DeliveryOffer): boolean {
   )
          && json.requestId.toString().trim() !== '';
 }
+
+export default DeliveryOffer;

@@ -1,5 +1,7 @@
 import * as express from 'express';
 
-export default (req: express.Request, res: express.Response): void => {
+export const startSessionRoute = (req: express.Request, res: express.Response): void => {
   res.json(res.locals.sessionDetails);
 };
+
+export default startSessionRoute;

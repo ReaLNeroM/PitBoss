@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { ConfigFlags } from '../../config/configFlags';
 
-export default (configFlags: ConfigFlags) => (
+export const logoutRoute = (configFlags: ConfigFlags) => (
   req: express.Request, res: express.Response,
 ): void => {
   res.clearCookie(
@@ -17,3 +17,5 @@ export default (configFlags: ConfigFlags) => (
     status: 'Logged out successfully!',
   });
 };
+
+export default logoutRoute;

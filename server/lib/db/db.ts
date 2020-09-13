@@ -2,7 +2,7 @@ import DBAccount from '../model/dbAccount';
 import DBRequest from '../model/dbRequest';
 import { tempMyRequest, tempMyDelivery } from '../model/historyEntry';
 
-export default interface DB {
+export interface DB {
   findUserById(userId: string): Promise<DBAccount | Error>;
   findUserByEmail(email: string): Promise<DBAccount | Error>;
   existsUserWithEmail(email: string): Promise<boolean | Error>;
@@ -14,3 +14,5 @@ export default interface DB {
   insertRequest(request: DBRequest): Promise<Error | undefined>;
   updateRequest(request: DBRequest): Promise<Error | undefined>;
 }
+
+export default DB;

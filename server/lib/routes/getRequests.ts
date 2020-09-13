@@ -5,7 +5,7 @@ import PublicRequest from '../model/publicRequest';
 import HttpException from '../exceptions/HttpException';
 import RequestStatus from '../model/requestStatus';
 
-export default (db: DB) => (
+export const getRequestsRoute = (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   db.getOpenRequests()
@@ -29,6 +29,8 @@ export default (db: DB) => (
           return publicRequest;
         });
 
-      res.json(publicRequests);
+      return res.json(publicRequests);
     });
 };
+
+export default getRequestsRoute;

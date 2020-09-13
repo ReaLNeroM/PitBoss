@@ -3,10 +3,10 @@ import DB from '../db/db';
 import { tempMyDelivery, tempMyRequest, tempHistoryEntry } from '../model/historyEntry';
 import HttpException from '../exceptions/HttpException';
 
-export default (db: DB) => (
+export const myHistoryRoute = (db: DB) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
-  const userId = res.locals.sessionDetails.userId;
+  const { userId } = res.locals.sessionDetails;
 
   db.getDeliveriesFromUser(userId)
     .then((deliveriesOrError: Array<tempMyDelivery> | Error) => {
@@ -28,13 +28,7 @@ export default (db: DB) => (
           combinedHistory.sort((a: tempHistoryEntry, b: tempHistoryEntry) => {
             const aDate = a.request.lastUpdate;
             const bDate = b.request.lastUpdate;
-            if (aDate < bDate) {
-              return -1;
-            } else if (aDate > bDate) {
-              return 1;
-            } else {
-              return 0;
-            }
+            return aDate.getTime() - bDate.getTime();
           });
 
           return res.json({
@@ -43,3 +37,5 @@ export default (db: DB) => (
         });
     });
 };
+
+export default myHistoryRoute;
