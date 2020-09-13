@@ -63,31 +63,31 @@ class RequestsPanel extends React.Component {
         "content-type": "application/json",
       },
     }).then((response) => {
-        if (!response.ok) {
-          response
-            .json()
-            .then((data) => {
-              throw new Error(`Error: ${data.message}`);
+      if (!response.ok) {
+        response
+          .json()
+          .then((data) => {
+            throw new Error(`Error: ${data.message}`);
+          })
+          .catch((error) =>
+            this.setState({
+              error,
             })
-            .catch((error) =>
-              this.setState({
-                error,
-              })
-            );
-        } else {
-          response
-            .json()
-            .catch((error) =>
-              this.setState({
-                error,
-              })
-            )
-            .then((data) => {
-              sendInfoNotification("Delivery requested!");
-              this.props.history.push("/my-deliveries");
-            });
-        }
-      });
+          );
+      } else {
+        response
+          .json()
+          .catch((error) =>
+            this.setState({
+              error,
+            })
+          )
+          .then((data) => {
+            sendInfoNotification("Delivery requested!");
+            this.props.history.push("/my-deliveries");
+          });
+      }
+    });
   }
 
   render() {
@@ -111,7 +111,10 @@ class RequestsPanel extends React.Component {
           <button
             value={req.requestId}
             onClick={handleDelivery}
-            className="btn btn-dark">Deliver!</button>
+            className="btn btn-dark"
+          >
+            Deliver!
+          </button>
         </div>
       </li>
     ));

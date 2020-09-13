@@ -58,20 +58,19 @@ class App extends Component {
       credentials: "include",
     })
       .then((response) => {
-        return response.json()
-          .then((data) => {
-            if(response.ok){
-              this.setState({
-                isLoggedIn: true,
-                userId: data.userId,
-              });
-            } else {
-              throw new Error(data.message);
-            }
-          });
+        return response.json().then((data) => {
+          if (response.ok) {
+            this.setState({
+              isLoggedIn: true,
+              userId: data.userId,
+            });
+          } else {
+            throw new Error(data.message);
+          }
+        });
       })
-      .catch(error => {
-        if(error.message !== "Not logged in."){
+      .catch((error) => {
+        if (error.message !== "Not logged in.") {
           this.sendInfoNotification(`${error}. Try logging in again.`);
         }
       });
@@ -153,7 +152,8 @@ class App extends Component {
                 apiUrl={apiUrl}
                 isLoggedIn={isLoggedIn}
                 sendInfoNotification={sendInfoNotification}
-                userId={userId} />
+                userId={userId}
+              />
             </Route>
             <Route
               exact
@@ -163,7 +163,8 @@ class App extends Component {
                   apiUrl={apiUrl}
                   isLoggedIn={isLoggedIn}
                   sendInfoNotification={sendInfoNotification}
-                  userId={userId} />
+                  userId={userId}
+                />
               )}
             />
             <Route
