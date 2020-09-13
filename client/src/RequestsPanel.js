@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import "./RequestsPanel.css";
 import TimeAgo from "react-timeago";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
@@ -135,4 +136,4 @@ class RequestsPanel extends React.Component {
   }
 }
 
-export default RequestsPanel;
+export default withRouter(RequestsPanel);
