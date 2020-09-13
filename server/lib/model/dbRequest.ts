@@ -8,6 +8,7 @@ export default interface DBRequest {
   orderNumber: string,
   created: Date,
   status: RequestStatus,
+  lastUpdate: Date,
 
   deliverer?: string,
   timeDelivererFound?: Date,

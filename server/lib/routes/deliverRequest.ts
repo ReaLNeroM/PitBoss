@@ -38,6 +38,7 @@ export default (db: DB) => (
         }
 
         const account: DBAccount = accountOrError as DBAccount;
+        const updateTime = new Date(Date.now());
         const newRequest: DBRequest = {
           schemaVersion: dbRequest.schemaVersion,
           requestId: dbRequest.requestId,
@@ -45,8 +46,11 @@ export default (db: DB) => (
           foodStation: dbRequest.foodStation,
           orderNumber: dbRequest.orderNumber,
           created: dbRequest.created,
-          status: RequestStatus.Delivering,
-          deliverer: res.locals.sessionDetails.userId
+          status: RequestStatus.FoundVolunteer,
+          lastUpdate: updateTime,
+
+          deliverer: res.locals.sessionDetails.userId,
+          timeDelivererFound: updateTime,
         }
 
         db.updateRequest(newRequest)

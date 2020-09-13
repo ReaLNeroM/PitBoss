@@ -15,14 +15,16 @@ export default (db: DB) => (
     return next(new HttpException(422, 'Form doesn\'t have correct format.'));
   }
 
+  const updateTime = new Date(Date.now());
   const dbRequest: DBRequest = {
     schemaVersion: request.schemaVersion.toString().trim(),
     requestId: uuidv4(),
     sender: res.locals.sessionDetails.userId,
     foodStation: request.foodStation.toString().trim(),
     orderNumber: request.orderNumber.toString().trim(),
-    created: new Date(),
+    created: updateTime,
     status: RequestStatus.Requested,
+    lastUpdate: updateTime
   };
 
   db.insertRequest(dbRequest)

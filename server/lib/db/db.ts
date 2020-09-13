@@ -1,6 +1,6 @@
 import DBAccount from '../model/dbAccount';
 import DBRequest from '../model/dbRequest';
-import PublicRequest from '../model/publicRequest';
+import { tempMyRequest, tempMyDelivery } from '../model/historyEntry';
 
 export default interface DB {
   findUserById(userId: string): Promise<DBAccount | Error>;
@@ -9,8 +9,8 @@ export default interface DB {
   insertAccount(account: DBAccount): Promise<Error | undefined>;
   getOpenRequests(): Promise<Array<DBRequest> | Error>;
   getRequestById(requestId: string): Promise<DBRequest | Error>;
-  getRequestsDeliveredById(userId: string): Promise<Array<PublicRequest> | Error>;
-  getRequestsFromId(userId: string): Promise<Array<DBRequest> | Error>;
+  getDeliveriesFromUser(userId: string): Promise<Array<tempMyDelivery> | Error>;
+  getRequestsFromUser(userId: string): Promise<Array<tempMyRequest> | Error>;
   insertRequest(request: DBRequest): Promise<Error | undefined>;
   updateRequest(request: DBRequest): Promise<Error | undefined>;
 }

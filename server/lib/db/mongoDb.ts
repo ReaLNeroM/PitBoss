@@ -2,7 +2,7 @@ import * as monk from 'monk';
 import DB from './db';
 import DBAccount from '../model/dbAccount';
 import DBRequest from '../model/dbRequest';
-import PublicRequest from '../model/publicRequest';
+import { tempMyDelivery, tempMyRequest } from '../model/historyEntry';
 
 export default class MongoDB implements DB {
   requests: monk.ICollection
@@ -87,20 +87,57 @@ export default class MongoDB implements DB {
       });
   }
 
-  getRequestsDeliveredById(userId: string): Promise<Array<PublicRequest> | Error> {
-    return this.requests
-      .find({ deliverer: userId })
-      .catch(error => {
-        return error;
-      })
+  async getDeliveriesFromUser(userId: string): Promise<Array<tempMyDelivery> | Error> {
+    const deliveries: Array<DBRequest> = await this.requests.find({ deliverer: userId });
+
+    const senders: Array<DBAccount | Error> = await Promise.all(deliveries.map((delivery: DBRequest) =>
+      this.findUserById(delivery.sender)
+    ));
+
+    const result: Array<tempMyDelivery> = [];
+    for (var i = 0; i < deliveries.length; i++){
+      if(senders[i] instanceof Error){
+        return senders[i] as Error;
+      }
+      result.push({
+        request: deliveries[i],
+        sender: senders[i],
+      } as tempMyDelivery);
+    }
+
+    return result;
   }
 
-  getRequestsFromId(userId: string): Promise<Array<DBRequest> | Error> {
-    return this.requests
-      .find({ sender: userId })
-      .catch(error => {
-        return error;
-      })
+  async getRequestsFromUser(userId: string): Promise<Array<tempMyRequest> | Error> {
+    const requests: Array<DBRequest> = await this.requests.find({ sender: userId });
+
+    const deliverers: Array<DBAccount | null | Error> = await Promise.all(
+      requests.map((request: DBRequest) => {
+        if(request.deliverer){
+          return this.findUserById(request.deliverer);
+        }
+
+        return null;
+      }));
+
+    const result: Array<tempMyRequest> = [];
+    for (var i = 0; i < requests.length; i++){
+      if(deliverers[i] instanceof Error){
+        return deliverers[i] as Error;
+      }
+      if(deliverers[i]){
+        result.push({
+          request: requests[i],
+          deliverer: deliverers[i],
+        } as tempMyRequest);
+      } else {
+        result.push({
+          request: requests[i],
+        } as tempMyRequest);
+      }
+    }
+
+    return result;
   }
 
   insertRequest(request: DBRequest): Promise<Error | undefined> {

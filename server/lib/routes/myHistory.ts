@@ -1,7 +1,6 @@
 import * as express from 'express';
 import DB from '../db/db';
-import DBRequest from '../model/dbRequest';
-import PublicRequest from '../model/publicRequest';
+import { tempMyDelivery, tempMyRequest, tempHistoryEntry } from '../model/historyEntry';
 import HttpException from '../exceptions/HttpException';
 
 export default (db: DB) => (
@@ -9,30 +8,38 @@ export default (db: DB) => (
 ): void => {
   const userId = res.locals.sessionDetails.userId;
 
-  db.getRequestsDeliveredById(userId)
-    .then((myDeliveriesOrError: (Array<PublicRequest> | Error)) => {
-      if(myDeliveriesOrError instanceof Error){
-        const error = myDeliveriesOrError as Error;
-
+  db.getDeliveriesFromUser(userId)
+    .then((deliveriesOrError: Array<tempMyDelivery> | Error) => {
+      if (deliveriesOrError instanceof Error) {
+        const error = deliveriesOrError as Error;
         return next(new HttpException(500, error.message));
       }
+      const deliveries = deliveriesOrError as Array<tempMyDelivery>;
 
-      const myDeliveries = myDeliveriesOrError as Array<PublicRequest>;
-
-      db.getRequestsFromId(userId)
-        .then((myRequestsOrError: (Array<DBRequest> | Error)) => {
-          if (myRequestsOrError instanceof Error) {
-            const error = myRequestsOrError as Error;
-
+      return db.getRequestsFromUser(userId)
+        .then((requestsOrError: Array<tempMyRequest> | Error) => {
+          if (requestsOrError instanceof Error) {
+            const error = requestsOrError as Error;
             return next(new HttpException(500, error.message));
           }
+          const requests = requestsOrError as Array<tempMyRequest>;
 
-          const myRequests = myRequestsOrError as Array<DBRequest>;
+          const combinedHistory: Array<tempHistoryEntry> = requests.concat(deliveries);
+          combinedHistory.sort((a: tempHistoryEntry, b: tempHistoryEntry) => {
+            const aDate = a.request.lastUpdate;
+            const bDate = b.request.lastUpdate;
+            if (aDate < bDate) {
+              return -1;
+            } else if (aDate > bDate) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
 
-          res.json({
-            myRequests: myRequests,
-            myDeliveries: myDeliveries
+          return res.json({
+            history: combinedHistory,
           });
         });
-    })
+    });
 };

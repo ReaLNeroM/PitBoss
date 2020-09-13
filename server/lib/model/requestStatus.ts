@@ -1,6 +1,8 @@
 export enum RequestStatus {
   Requested = "Requested",
-  Delivering = "Delivering",
+  FoundVolunteer = "FoundVolunteer",
+  PickedUp = "PickedUp",
+  DroppedOff = "DroppedOff",
   Success = "Success",
   Failure = "Failure"
 }
