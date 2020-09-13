@@ -150,8 +150,7 @@ export default class MongoDB implements DB {
     return this.requests.remove(
       { requestId: request.requestId },
       { justOne: true }
-    ).then(result => {
-      console.log(result);
+    ).then(_ => {
       return this.requests.insert(request);
     }).catch(error => {
       return error;
