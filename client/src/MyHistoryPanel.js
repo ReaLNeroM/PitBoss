@@ -6,9 +6,7 @@ class MyHistoryPanel extends React.Component {
     super(props);
     this.state = {
       error: null,
-      apiUrl: props.apiUrl,
-      myDeliveries: [],
-      myRequests: [],
+      myHistory: [],
       hasMyHistoryLoaded: false,
     };
 
@@ -20,7 +18,9 @@ class MyHistoryPanel extends React.Component {
   }
 
   async getDeliveries() {
-    fetch(`${this.state.apiUrl}/my-history`, {
+    const { apiUrl } = this.props;
+
+    fetch(`${apiUrl}/my-history`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -30,43 +30,30 @@ class MyHistoryPanel extends React.Component {
         }
 
         this.setState({
-          myRequests: data.myRequests,
-          myDeliveries: data.myDeliveries,
+          myHistory: data.history,
           hasMyHistoryLoaded: true,
         });
       })
       .catch((error) =>
         this.setState({
           error,
-          myRequests: [],
-          myDeliveries: [],
+          myHistory: [],
           hasMyHistoryLoaded: true,
         })
       );
   }
 
   render() {
-    const { error, myRequests, myDeliveries, hasMyHistoryLoaded } = this.state;
-    const myDeliveriesList = myDeliveries.map((delivery, index) => (
+    const { error, myHistory, hasMyHistoryLoaded } = this.state;
+    const myHistoryList = myHistory.map((historyEntry, index) => (
       <div>
-        {delivery.foodStation}
+        {historyEntry.request.foodStation}
         <br />
-        {delivery.orderNumber}
+        {historyEntry.request.orderNumber}
         <br />
-        {delivery.status}
+        {historyEntry.request.status}
         <br />
-        {delivery.created}
-      </div>
-    ));
-    const myRequestsList = myRequests.map((delivery, index) => (
-      <div>
-        {delivery.foodStation}
-        <br />
-        {delivery.orderNumber}
-        <br />
-        {delivery.status}
-        <br />
-        {delivery.created}
+        {historyEntry.request.created}
       </div>
     ));
 
@@ -86,18 +73,11 @@ class MyHistoryPanel extends React.Component {
           This tab hasn't been implemented yet, please wait ;)
         </div>
         <ul
-          id="deliveries-list"
+          id="history-list"
           className="list-group"
           style={hasMyHistoryLoaded ? {} : { display: "none" }}
         >
-          {myDeliveriesList}
-        </ul>
-        <ul
-          id="requests-list"
-          className="list-group"
-          style={hasMyHistoryLoaded ? {} : { display: "none" }}
-        >
-          {myRequestsList}
+          {myHistoryList}
         </ul>
       </div>
     );
