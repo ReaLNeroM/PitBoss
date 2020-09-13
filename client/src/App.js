@@ -58,18 +58,23 @@ class App extends Component {
       credentials: "include",
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
+        return response.json()
+          .then((data) => {
+            if(response.ok){
+              this.setState({
+                isLoggedIn: true,
+                userId: data.userId,
+              });
+            } else {
+              throw new Error(data.message);
+            }
+          });
+      })
+      .catch(error => {
+        if(error.message !== "Not logged in."){
+          this.sendInfoNotification(`${error}. Try logging in again.`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        this.setState({
-          isLoggedIn: true,
-          userId: data.userId,
-        });
-      })
-      .catch(() => {});
+      });
   }
 
   loginModalChange(event) {

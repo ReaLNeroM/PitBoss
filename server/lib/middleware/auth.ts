@@ -5,8 +5,9 @@ import DB from '../db/db';
 import HttpException from '../exceptions/HttpException';
 import DBAccount from '../model/dbAccount';
 import SessionDetails from '../model/sessionDetails';
+import { ConfigFlags } from '../config/configFlags';
 
-export const authRoute = (db: DB) => (
+export const authRoute = (db: DB, configFlags: ConfigFlags) => (
   req: express.Request, res: express.Response, next: express.NextFunction,
 ): void => {
   if (!('userId' in req.cookies)) {
@@ -40,6 +41,17 @@ export const authRoute = (db: DB) => (
       })
       .then(() => next());
   } catch (error) {
+    res.locals.isAuthenticated = false;
+    res.locals.sessionDetails = null;
+    res.clearCookie(
+      'userId',
+      {
+        expires: new Date(Date.now()),
+        sameSite: 'none',
+        httpOnly: true,
+        secure: configFlags.isSecure,
+      },
+    );
     return next(new HttpException(401, error.message));
   }
 };

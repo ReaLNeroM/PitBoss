@@ -39,13 +39,13 @@ app.use(cors({
 
 app.get('/', rootRoute);
 app.get('/get-requests', getRequestsRoute(db));
-app.post('/create-request', authenticatedMiddleware(db), createRequestRoute(db));
-app.post('/deliver-request', authenticatedMiddleware(db), deliverRequestRoute(db));
-app.get('/my-history', authenticatedMiddleware(db), myHistoryRoute(db));
+app.post('/create-request', authenticatedMiddleware(db, configFlags), createRequestRoute(db));
+app.post('/deliver-request', authenticatedMiddleware(db, configFlags), deliverRequestRoute(db));
+app.get('/my-history', authenticatedMiddleware(db, configFlags), myHistoryRoute(db));
 app.post('/auth/login', notAuthenticatedMiddleware(db), loginRoute(db, configFlags));
 app.post('/auth/register', notAuthenticatedMiddleware(db), registerRoute(db, configFlags));
-app.post('/auth/logout', authenticatedMiddleware(db), logoutRoute(configFlags));
-app.get('/auth/start-session', authenticatedMiddleware(db), startSessionRoute);
+app.post('/auth/logout', authenticatedMiddleware(db, configFlags), logoutRoute(configFlags));
+app.get('/auth/start-session', authenticatedMiddleware(db, configFlags), startSessionRoute);
 app.use(NotFoundRoute);
 
 // eslint-disable-next-line
