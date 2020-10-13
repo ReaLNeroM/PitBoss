@@ -100,6 +100,10 @@ export class MongoDB implements DB {
   async getRequestsFromUser(userId: string): Promise<Array<tempMyRequest> | Error> {
     const requests: Array<DBRequest> = await this.requests.find({ sender: userId });
 
+    const senders: Array<DBAccount | Error> = await Promise.all(
+      requests.map((delivery: DBRequest) => this.findUserById(delivery.sender)),
+    );
+
     const deliverers: Array<DBAccount | null | Error> = await Promise.all(
       requests.map((request: DBRequest) => {
         if (request.deliverer) {
@@ -119,10 +123,12 @@ export class MongoDB implements DB {
         result.push({
           request: requests[i],
           deliverer: deliverers[i],
+          sender: senders[i]
         } as tempMyRequest);
       } else {
         result.push({
           request: requests[i],
+          sender: senders[i]
         } as tempMyRequest);
       }
     }

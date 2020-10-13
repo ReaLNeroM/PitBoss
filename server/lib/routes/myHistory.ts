@@ -26,8 +26,8 @@ export const myHistoryRoute = (db: DB) => (
 
           const combinedHistory: Array<tempHistoryEntry> = requests.concat(deliveries);
           combinedHistory.sort((a: tempHistoryEntry, b: tempHistoryEntry) => {
-            const aDate = a.request.lastUpdate;
-            const bDate = b.request.lastUpdate;
+            const aDate = a.request.created;
+            const bDate = b.request.created;
             return aDate.getTime() - bDate.getTime();
           });
 
