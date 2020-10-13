@@ -49,6 +49,7 @@ class RequestsPanel extends React.Component {
       return;
     }
 
+
     const request = {
       deliverer: userId,
       requestId: event.target.value,
@@ -91,7 +92,7 @@ class RequestsPanel extends React.Component {
   }
 
   render() {
-    const { requests, haveRequestsLoaded } = this.state;
+    const { requests, haveRequestsLoaded, error } = this.state;
     const handleDelivery = this.handleDelivery.bind(this);
     const requestsLength = requests.length;
     const requestsList = requests.map((req, index) => (
@@ -127,6 +128,11 @@ class RequestsPanel extends React.Component {
         >
           <img src={`${process.env.PUBLIC_URL}/loading.gif`} alt="Loading..." />
         </div>
+        {error !== null && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
         <ul
           id="requests-list"
           className="list-group"
