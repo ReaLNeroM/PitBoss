@@ -1,5 +1,13 @@
 import React from "react";
+import "./RequestModal";
 import "./MyHistoryPanel.css";
+import RequestModal from "./RequestModal";
+import TimeAgo from "react-timeago";
+
+function toLocalDelta(timestamp) {
+  const time = new Date(Date.parse(timestamp));
+  return <TimeAgo date={time} />;
+}
 
 class MyHistoryPanel extends React.Component {
   constructor(props) {
@@ -8,9 +16,59 @@ class MyHistoryPanel extends React.Component {
       error: null,
       myHistory: [],
       hasMyHistoryLoaded: false,
+      requestModalShow: false,
+      requestModalInfo: {
+        request: {
+          _id: "",
+          schemaVersion: "request.1",
+          requestId: "",
+          sender: "",
+          foodStation: "Starbucks",
+          orderNumber: "12312",
+          created: "2020-08-24T07:33:18.879Z",
+          status: "FoundVolunteer",
+          deliverer: "",
+          timeDelivererFound: "2020-09-12T22:17:04.503Z"
+        },
+        sender: {
+            _id: "",
+            schemaVersion: "user.1",
+            userId: "",
+            fullName: "Vlad Maksimovski",
+            dormAndRoom: "Gale 334",
+            email: "vmaksimo@u.rochester.edu",
+            hashedPassword: "",
+            hasAllergy: false,
+            allergies: ""
+        }
+      }
     };
 
     this.getDeliveries = this.getDeliveries.bind(this);
+    this.requestModalChange = this.requestModalChange.bind(this);
+    this.requestChange = this.requestChange.bind(this);
+  }
+
+  requestModalChange(event) {
+    if (typeof event === "boolean") {
+      this.setState({
+        requestModalShow: event,
+      });
+    } else if (typeof event.target.value === "string") {
+      this.setState({
+        requestModalShow: event.target.value === "true",
+      });
+    } else {
+      throw new Error("Could not change request modal value.");
+    }
+  }
+
+  requestChange(event) {
+    const historyIndex = parseInt(event.target.value);
+    this.setState({
+      requestModalInfo: this.state.myHistory[historyIndex],
+      requestModalShow: true
+    });
   }
 
   componentDidMount() {
@@ -44,17 +102,35 @@ class MyHistoryPanel extends React.Component {
   }
 
   render() {
-    const { error, myHistory, hasMyHistoryLoaded } = this.state;
+    const { error, myHistory, hasMyHistoryLoaded, requestModalShow, requestModalInfo } = this.state;
+    const { userId } = this.props;
     const myHistoryList = myHistory.map((historyEntry, index) => (
-      <div>
-        {historyEntry.request.foodStation}
-        <br />
-        {historyEntry.request.orderNumber}
-        <br />
-        {historyEntry.request.status}
-        <br />
-        {historyEntry.request.created}
-      </div>
+      <li
+        key={historyEntry.request.requestId}
+        className={`d-flex justify-content-between align-items-center list-group-item ${
+          index !== myHistory.length - 1 ? "mb-2" : ""
+        }`}
+      >
+        <div>
+          <b>{historyEntry.request.sender === userId ?
+            "Order at " + historyEntry.request.foodStation :
+            "Delivery for " + historyEntry.request.foodStation}</b>
+          <br />
+          <br />
+          Last updated {historyEntry.request.status === "Requested" ?
+            toLocalDelta(historyEntry.request.created) :
+            toLocalDelta(historyEntry.request.timeDelivererFound)}
+        </div>
+        <div className="d-flex align-items-center">
+          <button
+            value={index}
+            className="btn btn-primary"
+            onClick={this.requestChange}
+          >
+            View
+          </button>
+        </div>
+      </li>
     ));
 
     return (
@@ -67,16 +143,18 @@ class MyHistoryPanel extends React.Component {
         </div>
         <div
           id="error-my-history"
-          className="alert alert-info"
+          className="alert alert-danger"
           style={error === null ? { display: "none" } : {}}
         >
-          This tab hasn't been implemented yet, please wait ;)
+          {error !== null && error.toString()}
         </div>
-        <ul
-          id="history-list"
-          className="list-group"
-          style={hasMyHistoryLoaded ? {} : { display: "none" }}
-        >
+
+        <RequestModal
+          requestModalShow={requestModalShow}
+          requestModalChange={this.requestModalChange}
+          requestModalInfo={requestModalInfo}
+          />
+        <ul className="list-group">
           {myHistoryList}
         </ul>
       </div>

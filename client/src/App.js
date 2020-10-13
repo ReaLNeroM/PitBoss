@@ -186,7 +186,8 @@ class App extends Component {
               path="/my-deliveries"
               render={() => (
                 <div id="myHistoryPanel">
-                  <MyHistoryPanel apiUrl={apiUrl} />
+                  <MyHistoryPanel apiUrl={apiUrl}
+                                  userId={userId} />
                 </div>
               )}
             />

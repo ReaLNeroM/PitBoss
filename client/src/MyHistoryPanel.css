@@ -5,3 +5,9 @@
 #error-my-history {
   margin-bottom: 0rem !important;
 }
+
+.history-item {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
