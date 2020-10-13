@@ -72,7 +72,7 @@ class RequestsPanel extends React.Component {
           })
           .catch((error) =>
             this.setState({
-              error,
+              error: error.message,
             })
           );
       } else {
