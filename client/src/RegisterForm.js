@@ -11,8 +11,8 @@ function validateRequest(registerData) {
   if (!registerData.email.includes("@u.rochester.edu")) {
     return "Please enter valid e-mail (must contain @u.rochester.edu)";
   }
-  if (!registerData.password.length > 6) {
-    return "Please enter a secure password (6 characters or above)";
+  if (registerData.password.length < 8) {
+    return "Please enter a secure password (8 characters or above)";
   }
 
   return "";
